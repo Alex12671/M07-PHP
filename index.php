@@ -4,11 +4,16 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="login.css">
     <meta charset="utf-8">
     <title>Iniciar Sesión</title>
   </head>
     <body>
+    <nav class="menu">
+      <ul>
+        <li><a href="registro.php">Regístrate aquí</a></li>
+        <li><a href="login_admin.php">Acceder a administración</a></li>
+      </ul>
 
     <?php
     if(isset($_POST['nombre'])) {
@@ -16,7 +21,7 @@ session_start();
         login($_POST['nombre'],$_POST['passwd']);
     }
     else{?>
-      <form  id="login" method="POST" >
+      <form  id="login" method="POST" class="login">
         <label for="nombre">Email: 
         <input type="email" id="login" name="nombre"><br/>
         <label for="passwd">Contraseña: 
@@ -27,8 +32,6 @@ session_start();
         <input type="radio" id="profesor" name="rol" value="profesor"><br/>
         <input type="submit" value="Entrar"></input><br/>
       </form>
-      <a href="registro.php">Regístrate aquí</a><br/>
-      <a href="login_admin.php">Acceder a administración</a>
   <?php
     }
     ?>

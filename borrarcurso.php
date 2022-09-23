@@ -14,7 +14,7 @@ session_start();
         include("funciones.php");
         if($_SESSION) {
           if(validaradmin() == 1) {
-            modificarCurso($_GET['Codi']);
+            borrarCurso($_GET['Codi']);
           }
           else {
             echo "Solo los administradores pueden ver esta página";

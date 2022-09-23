@@ -60,6 +60,7 @@ function registrar($dades) {
             if(!mysqli_query($conn,$query)) {
             
                 echo "Fallo al realizar la consulta";
+                echo '<meta http-equiv="refresh" content="2;url=login.php" />';
                 
             } 
 
@@ -72,6 +73,7 @@ function registrar($dades) {
             if(!mysqli_query($conn,$query)) {
             
             echo "Fallo al realizar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=login.php" />';
             
             } 
 
@@ -84,6 +86,7 @@ function registrar($dades) {
           if(!mysqli_query($conn,$query)) {
           
             echo "Fallo al realizar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=login.php" />';
             
           } 
 
@@ -111,6 +114,7 @@ function registrar($dades) {
             if(!mysqli_query($conn,$query)) {
                     
             echo "Fallo al realizar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=login.php" />';
                     
             }
 
@@ -147,6 +151,7 @@ function añadirCurso($form) {
         if(!mysqli_query($conn,$query)) {
           
           echo "Fallo al realizar la consulta";
+          echo '<meta http-equiv="refresh" content="2;url=cursos.php" />';
           
         } 
     }  
@@ -185,6 +190,7 @@ function modificarCurso($codi) {
                 if(!mysqli_query($conn,$query)) {
                 
                 echo "Fallo al realizar la consulta";
+                echo '<meta http-equiv="refresh" content="2;url=cursos.php" />';
                 
                 } 
 
@@ -203,6 +209,7 @@ function modificarCurso($codi) {
         if(!$result) {
             
             echo "Fallo al realizar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=cursos.php" />';
             
         }
         else {
@@ -298,6 +305,7 @@ function listarProfesores() {
     if(!$result) {
           
         echo "Fallo al realizar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
         
       }
     
@@ -387,6 +395,7 @@ function añadirProfesor($form) {
             if(!mysqli_query($conn,$query)) {
                 
                 echo "Fallo al realizar la consulta";
+                echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
                 
             }
         }
@@ -399,6 +408,7 @@ function añadirProfesor($form) {
             if(!mysqli_query($conn,$query)) {
             
             echo "Fallo al realizar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
             
             } 
 
@@ -412,6 +422,7 @@ function añadirProfesor($form) {
           if(!mysqli_query($conn,$query)) {
           
             echo "Fallo al realizar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
             
           } 
 
@@ -440,6 +451,7 @@ function añadirProfesor($form) {
             if(!mysqli_query($conn,$query)) {
                     
             echo "Fallo al realizar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
                     
             }
 
@@ -589,6 +601,7 @@ function modificarProfesor($dni) {
                 if(!mysqli_query($conn,$query)) {
                     
                     echo "Fallo al realizar la consulta";
+                    echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
                     
                 } 
     
@@ -620,6 +633,7 @@ function modificarProfesor($dni) {
                         if(!mysqli_query($conn,$query)) {
                                 
                         echo "Fallo al realizar la consulta";
+                        echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
                                 
                         }
             

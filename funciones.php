@@ -50,17 +50,83 @@ function validaradmin() {
 
 function registrar($dades) {
     $conn = conectar();
-    $columns = implode(', ',array_keys($dades));
-    $values  = implode(', ', array_values($dades));
-    echo $columns;
-    $query = "INSERT INTO 'infobdn' ($columns) VALUES ($values)";
-    if(mysqli_query($conn,$query)) {
-        echo "Datos introducidos correctamente";
-    }
-    else {
-        echo "Hubo un error al introducir los datos";
-    }
+    foreach($dades as $field_name => $value) {
+      
+        if($field_name == "DNI") {
 
+            $dni = $value;
+            $query = "INSERT INTO alumnes($field_name) VALUES ('$value')";
+
+            if(!mysqli_query($conn,$query)) {
+            
+                echo "Fallo al realizar la consulta";
+                
+            } 
+
+        }
+        
+        else if($field_name == "Password") {
+
+            $query = "UPDATE alumnes SET $field_name = '".md5($value)."' WHERE DNI = '$dni'";
+          
+            if(!mysqli_query($conn,$query)) {
+            
+            echo "Fallo al realizar la consulta";
+            
+            } 
+
+        }
+
+        else {
+  
+          $query = "UPDATE alumnes SET $field_name = '$value' WHERE DNI = '$dni'";
+          
+          if(!mysqli_query($conn,$query)) {
+          
+            echo "Fallo al realizar la consulta";
+            
+          } 
+
+        }
+  
+        
+    } 
+    
+    $filename = $_FILES['Foto']['name'];
+    $destination = 'alumnes/'.$filename;
+    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+    $file = $_FILES['Foto']['tmp_name'];
+    $size = $_FILES['Foto']['size'];
+
+    if ($_FILES['Foto']['size'] > 16000000) { // Tamaño maximo = 16MB
+        echo "<p class=fallo>El archivo es muy grande!</p>";
+        echo '<meta http-equiv="refresh" content="2;url=index.php" />';
+    } 
+    else {
+            
+        if (move_uploaded_file($file, $destination)) {
+
+            $query = "UPDATE alumnes SET Foto = '$destination' WHERE DNI = '$dni'";
+        
+            if(!mysqli_query($conn,$query)) {
+                    
+            echo "Fallo al realizar la consulta";
+                    
+            }
+
+            
+
+        } 
+        else {
+
+            echo "<p class=fallo>Hubo un fallo al subir el archivo.</p>";
+            echo '<meta http-equiv="refresh" content="2;url=index.php" />';
+    
+        }
+    }
+    echo "Usuario registrado correctamente";
+    echo "<meta http-equiv=refresh content='2; url=index.php'>";
+    
 }
 
 function añadirCurso($form) {

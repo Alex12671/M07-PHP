@@ -6,7 +6,7 @@ session_start();
   <head>
     <link rel="stylesheet">
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Cursos</title>
   </head>
     <body>
 

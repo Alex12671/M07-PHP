@@ -6,7 +6,7 @@ session_start();
   <head>
     <link rel="stylesheet">
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Panel de control admin</title>
   </head>
     <body>
 

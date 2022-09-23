@@ -6,7 +6,7 @@ session_start();
   <head>
     <link rel="stylesheet">
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Modificar Curso</title>
   </head>
     <body>
 
@@ -14,6 +14,7 @@ session_start();
         include("funciones.php");
         if($_SESSION) {
           if(validaradmin() == 1) {
+            echo"<h1>Modificar curso existente</h1>";
             modificarCurso($_GET['Codi']);
           }
           else {

@@ -6,7 +6,7 @@ session_start();
   <head>
     <link rel="stylesheet">
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Añadir profesor</title>
   </head>
     <body>
 
@@ -18,8 +18,9 @@ session_start();
             añadirProfesor($_POST);
             }
             else{
-                echo "Hola ".$_SESSION['nombre']."!";
+            
               ?>
+            <h1>Añadir un nuevo profesor</h1>
             <form  id="prof" method="POST" enctype="multipart/form-data" >
             <label for="DNI">DNI: 
                 <input type="text" id="prof" name="DNI" pattern="[0-9]{8}[A-Z]{1}" required>

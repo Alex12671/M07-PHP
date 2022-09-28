@@ -12,8 +12,8 @@ session_start();
 
     <?php
     include("funciones.php");
-    if($_SESSION) {
-        if(validaradmin() == 1) {
+    if(isset($_SESSION)) {
+        if(validar($_SESSION['rol']) == 0) {
           if(isset($_POST['Nom'])) {
             añadirProfesor($_POST);
             }
@@ -24,6 +24,8 @@ session_start();
             <form  id="prof" method="POST" enctype="multipart/form-data" >
             <label for="DNI">DNI: 
                 <input type="text" id="prof" name="DNI" pattern="[0-9]{8}[A-Z]{1}" required>
+                <label for="Email">Email: 
+                <input type="email" id="Email" name="Email" required><br/>
                 <label for="Nom">Nom: 
                 <input type="text" id="prof" name="Nom" required><br/>
                 <label for="Cognoms">Cognoms: 

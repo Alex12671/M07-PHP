@@ -1,4 +1,118 @@
 li {
-    display:inline;
-    float:right;
+    display:flex;
+    margin-bottom:1%;
 }
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+img{
+    margin-top:-1%;
+    width:10%;
+    max-width:120px;
+    min-width:85px;
+    height:5%;
+    float:right;
+    border-radius:40%;
+}
+
+
+header {
+    background-color: #4285f4;
+    padding:2%;
+    height:auto;
+   margin-bottom:5%;
+}
+
+form {
+    display:inline-block;
+    text-align: center;
+    padding:2%;
+}
+
+a {
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: none;
+    font-size:25px;
+
+}
+
+a:hover {
+    text-decoration: underline;
+    color:black;
+}
+
+#formularioLogin {
+    border:1px solid black;
+    width: 100%;
+    max-width:380px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align:center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 60px;
+    margin-bottom:5%;
+}
+
+label {
+   display:flex;
+   width:100%;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   text-align:center;
+   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-    serif;
+   font-size:large;
+}
+
+input {
+   display:flex;
+   width:100%;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   text-align:center;
+   border:none;
+   border-bottom:2px solid black;
+}
+
+input:hover {
+   background-color:#4285f4;
+}
+
+input:focus {
+    border:1px solid blue;
+}
+
+
+::placeholder {
+   color:black;
+}
+
+button {
+   width:160%;
+   background-color:#4285f4;
+   border-radius: 15px;
+   padding: 5%;
+   margin-top:5%;
+   border:none;
+   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-    serif;
+   font-size:large;
+   color:white;
+}
+
+button:hover {
+    background-color:#2958a3;
+}
+

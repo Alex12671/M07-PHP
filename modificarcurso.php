@@ -12,10 +12,21 @@ session_start();
 
     <?php
         include("funciones.php");
-        if($_SESSION) {
-          if(validaradmin() == 1) {
-            echo"<h1>Modificar curso existente</h1>";
-            modificarCurso($_GET['Codi']);
+        if(isset($_SESSION)) {
+          if(validar($_SESSION['rol']) == 0) {
+            if(isset($_GET['Codi'])) {
+
+              echo"<h1>Modificar curso existente</h1>";
+              modificarCurso($_GET['Codi']);
+
+            }
+            else {
+
+              echo "No se puede ejecutar la consulta";
+              echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+              
+            }
+            
           }
           else {
             echo "Solo los administradores pueden ver esta página";

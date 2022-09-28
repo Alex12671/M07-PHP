@@ -13,7 +13,7 @@ session_start();
     <?php
     if(isset($_POST['nombre'])) {
         include("funciones.php");
-        login($_POST['nombre'],$_POST['passwd']);
+        loginAdmin($_POST['nombre'],$_POST['passwd']);
     }
     else{?>
       <form  id="login" method="POST" >

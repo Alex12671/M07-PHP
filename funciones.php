@@ -12,10 +12,9 @@ function conectar() {
     return $conn;
 }
 
-function login($username,$password) {
+function loginAdmin($username,$password) {
+
     $conn = conectar();
-    
-  
     $query = "SELECT * FROM admin WHERE Password = '".md5($password)."'";
     $result = mysqli_query($conn,$query);
     if(mysqli_num_rows($result) == 1) {
@@ -24,25 +23,61 @@ function login($username,$password) {
 
             $_SESSION['nombre'] = $username;
             $_SESSION['passwd'] = $password; 
-            $_SESSION['rol'] = "admin";
+            $_SESSION['rol'] = 0;
             echo "<meta http-equiv=refresh content='0; url=administracion.php'>";
         }
-        
+            
     }
     else {
         echo "Las credenciales son incorrectas";
         echo "<meta http-equiv=refresh content='2; url=login_admin.php'>";
     }
+
+}
+
+
+function login($email,$password,$rol) {
+
+    $conn = conectar();
+    if($rol == "profesor") {
+        $query = "SELECT * FROM professors WHERE Email = '$email' AND Password = '".md5($password)."'";
+        $result = mysqli_query($conn,$query);
+        if(mysqli_num_rows($result) == 1) {
+            $credenciales = mysqli_fetch_row($result);
+            if(md5($password) == $credenciales[6] && $email == $credenciales[1]) {
+                $_SESSION['nombre'] = $credenciales[2];
+                $_SESSION['passwd'] = $password; 
+                $_SESSION['rol'] = 1;
+                echo "<meta http-equiv=refresh content='0; url=inicioprofesores.php'>";
+            }
+            
+        }
+        else {
+            echo "Las credenciales son incorrectas";
+            echo "<meta http-equiv=refresh content='2; url=index.php'>";
+        }
+
+    }
+    
     
 }
 
-function validaradmin() {
-    
-    if($_SESSION['rol'] == "admin") {
-        return 1;
-    }
-    else {
+function validar($rol) {
+    //rol 0 es admin, rol 1 es profesor, rol 2 es alumno
+    if($rol == 0) {
+
         return 0;
+
+    }
+    else if($rol == 1) {
+
+        return 1 ;
+
+    }
+    else if($rol == 2) {
+
+        return 2;
+
     }
     
     
@@ -159,27 +194,50 @@ function añadirCurso($form) {
     echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
 }
 
-function borrarCurso($codi) {
+function borrarCurso($codi,$estado) {
     $conn = conectar();
-    $query = "UPDATE cursos SET Activado = '0' WHERE Codi = '$codi'";
-    if(!mysqli_query($conn,$query)) {
+    if ($estado == 1) {
+
+        $query = "UPDATE cursos SET Activado = '0' WHERE Codi = '$codi'";
+
+        if(!mysqli_query($conn,$query)) {
           
-        echo "Fallo al realizar la consulta";
-        echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
-        
+            echo "Fallo al realizar la consulta";
+            echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+            
+        }
+        else {
+    
+            echo "Curso desactivado con éxito";
+            echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+    
+        } 
     }
-    else {
+    else if ($estado == 0) {
 
-        echo "Curso borrado con éxito";
-        echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+        $query = "UPDATE cursos SET Activado = '1' WHERE Codi = '$codi'";
 
-    } 
+        if(!mysqli_query($conn,$query)) {
+          
+            echo "Fallo al realizar la consulta";
+            echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+            
+        }
+        else {
+    
+            echo "Curso activado con éxito";
+            echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+    
+        } 
+    }
+    
+    
     
 }
 
 function modificarCurso($codi) {
     $conn = conectar();
-    if(isset($_POST['Nom'])) {
+    if(isset($_POST['DNI'])) {
 
         foreach($_POST as $field_name => $value) {
 
@@ -220,7 +278,7 @@ function modificarCurso($codi) {
     ?>
     <form  id="modify" method="POST" >
                 <label for="Nom">Nom: 
-                <input type="text" id="modify" name="Nom" placeholder = "<?php echo $curso['Nom']; ?>" ><br/>
+                <input disabled type="text" id="modify" name="Nom" placeholder = "<?php echo $curso['Nom']; ?>" ><br/>
                 <label for="Descripcio">Descripció: 
                 <input type="text" id="modify" name="Descripcio" placeholder = "<?php echo $curso['Descripcio']; ?>" >
                 <label for="Hores_Duracio">Hores duració: 
@@ -230,7 +288,8 @@ function modificarCurso($codi) {
                 <label for="Data_Final">Data final: 
                 <input type="text" id="modify" name="Data_Final"  onfocus="(this.type='date')" placeholder = "<?php echo $curso['Data_Final']; ?>" ><br/>
                 <label for="DNI">DNI: 
-                <select name="DNI" id="modify" placeholder = "<?php echo $curso['DNI']; ?>"  >
+                <select name="DNI" id="modify"  >
+                    <option selected disabled value="">Selecciona un profesor</option>
                     <?php
                     listarProfesores();
                     ?>
@@ -263,7 +322,8 @@ function mostrarColumnasCursos() {
                 
             }  
             echo "<th>Modificar</th>";
-            echo "<th>Eliminar</th>";
+            echo "<th>Act./Desact.</th>";
+            
         }
 }
 
@@ -271,7 +331,7 @@ function mostrarCursos() {
           $conn = conectar();
           mostrarColumnasCursos();
           echo "</thead>";
-          $query = "SELECT * FROM cursos WHERE Activado = '1' ORDER BY Codi";
+          $query = "SELECT * FROM cursos ORDER BY Codi";
           $result = $conn->query($query);
           if (!$result) {
               echo "Fallo al ejecutar la consulta";
@@ -282,15 +342,29 @@ function mostrarCursos() {
                 echo "<tbody>";
                 echo "<tr>"; 
                 foreach ($array as $field_name => $value) {
-                    if($field_name != "Activado") {
+
+                    if ($field_name == "Activado") {
+
+                        if($value == '1') {
+
+                            $src = 'img/tick.png';
+
+                        }
+                        else {
+
+                            $src = 'img/cross.png';
+
+                        }
+                    }
+                    else {
 
                         echo "<td>$value</td>";
 
                     }
                     
                 }
-                echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."'><img src='img/pencil.jpg' alt='Modificar' style='width:42px;height:42px;'></a></td>";
-                echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."'><img src='img/cross.jpg' alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
+                echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
+                echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
                 
               }
               echo "</tbody>";
@@ -300,7 +374,7 @@ function mostrarCursos() {
   
 function listarProfesores() {
     $conn = conectar();
-    $query = "SELECT DNI,Nom,Cognoms FROM professors";
+    $query = "SELECT DNI,Nom,Cognoms FROM professors WHERE Activado = 1";
     $result = mysqli_query($conn,$query);
     if(!$result) {
           
@@ -338,7 +412,7 @@ function mostrarColumnasProfesores() {
                 
             }  
             echo "<th>Modificar</th>";
-            echo "<th>Eliminar</th>";
+            echo "<th>Act./Desact.</th>";
         }
 }
 
@@ -346,7 +420,7 @@ function mostrarProfesores() {
           $conn = conectar();
           mostrarColumnasProfesores();
           echo "</thead>";
-          $query = "SELECT * FROM professors WHERE Activado = '1' ORDER BY Nom";
+          $query = "SELECT * FROM professors ORDER BY Nom";
           $result = $conn->query($query);
           if (!$result) {
               echo "Fallo al ejecutar la consulta";
@@ -357,14 +431,26 @@ function mostrarProfesores() {
                 echo "<tbody>";
                 echo "<tr>"; 
                 foreach ($array as $field_name => $value) {
-                    if($field_name != "Password" && $field_name != "Activado") {
+                    if($field_name != "Password") {
 
                         if($field_name == "Foto") {
                             
                             echo "<td><img src=".$array['Foto']." alt=".$array['Foto']." style='width:50px;height:40px;'></img></td>";
 
                         }
+                        else if($field_name == "Activado") {
+                            if($value == '1') {
 
+                                $src = 'img/tick.png';
+
+                            }
+                            else {
+
+                                $src = 'img/cross.png';
+
+                            }
+
+                        }
                         else {
 
                             echo "<td>$value</td>";
@@ -374,8 +460,8 @@ function mostrarProfesores() {
                     }
                     
                 }
-                echo"<td><a href='modificarprofesor.php?id=".$array['DNI']."'><img src='img/pencil.jpg' alt='Modificar' style='width:42px;height:42px;'></a></td>";
-                echo"<td><a href='borrarprofesor.php?id=".$array['DNI']."'><img src='img/cross.jpg' alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
+                echo"<td><a href='modificarprofesor.php?id=".$array['DNI']."&estado=".$array['Activado']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
+                echo"<td><a href='borrarprofesor.php?id=".$array['DNI']."&estado=".$array['Activado']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
                 
               }
               echo "</tbody>";
@@ -472,28 +558,49 @@ function añadirProfesor($form) {
 }
 
 
-function borrarProfesor($dni) {
+function borrarProfesor($dni,$estado) {
     $conn = conectar();
-    $query = "UPDATE professors SET Activado = '0' WHERE DNI = '$dni'";
-    if(!mysqli_query($conn,$query)) {
+    if ($estado == 1) {
+
+        $query = "UPDATE professors SET Activado = '0' WHERE DNi = '$dni'";
+
+        if(!mysqli_query($conn,$query)) {
           
-        echo "Fallo al realizar la consulta";
-        echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
-        
+            echo "Fallo al realizar la consulta";
+            echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+            
+        }
+        else {
+    
+            echo "Profesor desactivado con éxito";
+            echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+    
+        } 
     }
-    else {
+    else if ($estado == 0) {
 
-        echo "Profesor borrado con éxito";
-        echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+        $query = "UPDATE professors SET Activado = '1' WHERE DNI = '$dni'";
 
-    } 
+        if(!mysqli_query($conn,$query)) {
+          
+            echo "Fallo al realizar la consulta";
+            echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+            
+        }
+        else {
+    
+            echo "Profesor activado con éxito";
+            echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+    
+        } 
+    }
 
 }
 
 
 function buscarCursos($nombre) {
     $conn = conectar();
-    $query = "SELECT * FROM cursos WHERE Nom LIKE '$nombre%' AND Activado = '1'";
+    $query = "SELECT * FROM cursos WHERE Nom LIKE '$nombre%'";
     $result = $conn->query($query);
     if (!$result) {
         echo "Fallo al ejecutar la consulta";
@@ -512,12 +619,26 @@ function buscarCursos($nombre) {
                 echo "<td>$value</td>";
 
             }
+            else {
+
+                if($value == 1) {
+
+                    $src = "img/tick.png";
+
+                }
+                else if($value == 0) {
+
+                    $src = "img/cross.png";
+
+                }
+
+            }
             
               
           }
 
-          echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."'><img src='img/pencil.jpg' alt='Modificar' style='width:42px;height:42px;'></a></td>";
-          echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."'><img src='img/cross.jpg' alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
+          echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
+          echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
           
         }
         echo "</tbody>";
@@ -533,7 +654,7 @@ function buscarCursos($nombre) {
 
 function buscarProfesores($nombre) {
     $conn = conectar();
-    $query = "SELECT * FROM professors WHERE Nom LIKE '$nombre%' AND Activado = '1'";
+    $query = "SELECT * FROM professors WHERE Nom LIKE '$nombre%'";
     $result = $conn->query($query);
     if (!$result) {
 
@@ -552,7 +673,7 @@ function buscarProfesores($nombre) {
             echo "<tr>"; 
             foreach ($array as $field_name => $value) {
 
-                if($field_name != "Password" && $field_name != "Activado") {
+                if($field_name != "Password") {
 
                     if($field_name == "Foto") {
                             
@@ -560,6 +681,20 @@ function buscarProfesores($nombre) {
 
                     }
 
+                    else if($field_name == "Activado") {
+
+                        if($value == 1) {
+
+                            $src = "img/tick.png";
+
+                        }
+                        else if($value == 0) {
+
+                            $src = "img/cross.png";
+
+                        }
+
+                    }
                     else {
 
                         echo "<td>$value</td>";
@@ -570,8 +705,8 @@ function buscarProfesores($nombre) {
                     
             }
 
-            echo"<td><a href='modificarprofesor.php?id=".$array['DNI']."'><img src='img/pencil.jpg' alt='Modificar' style='width:42px;height:42px;'></a></td>";
-            echo"<td><a href='borrarprofesor.php?id=".$array['DNI']."'><img src='img/cross.jpg' alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
+            echo"<td><a href='modificarprofesor.php?id=".$array['DNI']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
+            echo"<td><a href='borrarprofesor.php?id=".$array['DNI']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
                 
             }
 
@@ -669,26 +804,28 @@ function modificarProfesor($dni) {
         }
         else {
 
-            $curso = mysqli_fetch_array($result,MYSQLI_ASSOC);
+            $profesor = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
         } 
     ?>
     <script src="ModificarFoto.js"></script>
     <form  id="modify" method="POST" enctype="multipart/form-data" >
-                <label for="DNI">DNI: 
-                <input type="text" id="modify" name="DNI" placeholder = "<?php echo $curso['DNI']; ?>" ><br/>
-                <label for="Nom">Nom: 
-                <input type="text" id="modify" name="Nom" placeholder = "<?php echo $curso['Nom']; ?>" >
-                <label for="Cognoms">Cognoms: 
-                <input type="text" id="modify" name="Cognoms" placeholder = "<?php echo $curso['Cognoms']; ?>" ><br/>
-                <label for="Titol_Academic">Titol Acadèmic: 
-                <input type="text" id="modify" name="Titol_Academic" placeholder = "<?php echo $curso['Titol_Academic']; ?>" >
-                <label for="mod_foto">Modificar: 
-                <input type="checkbox" id="Foto" name="Foto" onclick="modificarFoto()" >
-                Foto actual: <img src="<?php echo $curso['Foto']; ?>" style='width:50px;height:40px;'></img><br/>
-                <div id="divFoto"></div>
-                <input type="submit" value="Modificar"></input>
-            </form>
+        <label for="DNI">DNI: 
+            <input disabled type="text" id="modify" name="DNI" placeholder = "<?php echo $profesor['DNI']; ?>" ><br/>
+        <label for="Email">Email: 
+            <input disabled type="email" id="modify" name="Email" placeholder = "<?php echo $profesor['Email']; ?>" ><br/>
+        <label for="Nom">Nom: 
+            <input type="text" id="modify" name="Nom" placeholder = "<?php echo $profesor['Nom']; ?>" >
+        <label for="Cognoms">Cognoms: 
+            <input type="text" id="modify" name="Cognoms" placeholder = "<?php echo $profesor['Cognoms']; ?>" ><br/>
+        <label for="Titol_Academic">Titol Acadèmic: 
+            <input type="text" id="modify" name="Titol_Academic" placeholder = "<?php echo $profesor['Titol_Academic']; ?>" >
+        <label for="mod_foto">Modificar: 
+            <input type="checkbox" id="Foto" name="Foto" onclick="modificarFoto()" >
+        Foto actual: <img src="<?php echo $profesor['Foto']; ?>" style='width:50px;height:40px;'></img><br/>
+            <div id="divFoto"></div>
+            <input type="submit" value="Modificar"></input>
+        </form>
     
             
             <?php

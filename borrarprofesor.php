@@ -12,9 +12,20 @@ session_start();
 
     <?php
         include("funciones.php");
-        if($_SESSION) {
-          if(validaradmin() == 1) {
-            borrarProfesor($_GET['id']);
+        if(isset($_SESSION)) {
+          if(validar($_SESSION['rol']) == 0) {
+            if(isset($_GET['id'])) {
+
+              borrarProfesor($_GET['id'],$_GET['estado']);
+
+            }
+            else {
+
+              echo "No se puede ejecutar la consulta";
+              echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+
+            }
+            
           }
           else {
             echo "Solo los administradores pueden ver esta página";

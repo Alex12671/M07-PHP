@@ -13,8 +13,8 @@ session_start();
     <?php
         include("funciones.php");
         if($_SESSION) {
-          if(validar($_SESSION['rol']) == 0) {
-            echo "Hola ".$_SESSION['nombre']."!";
+          if(validar($_SESSION['rol']) == 1) {
+            echo "Bienvenido ".$_SESSION['nombre']."!";
             ?>
               <br/><a href="sortir.php">Sortir de la sessió</a>
               <a href="cursos.php">Administrar cursos</a>
@@ -22,13 +22,13 @@ session_start();
             <?php
           }
           else {
-            echo "Solo los administradores pueden ver esta página";
-            echo "<meta http-equiv=refresh content='2; url=login_admin.php'>";
+            echo "Solo los profesores pueden ver esta página";
+            echo "<meta http-equiv=refresh content='2; url=inicioprofesores.php'>";
           }
         }
         else {
           echo "Debes iniciar sesión primero!";
-          echo "<meta http-equiv=refresh content='2; url=login_admin.php'>";
+          echo "<meta http-equiv=refresh content='2; url=index.php'>";
         }
     ?>
     </body>

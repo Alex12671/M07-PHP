@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="profesores.css">
     <meta charset="utf-8">
     <title>Profesores</title>
   </head>
@@ -12,8 +12,8 @@ session_start();
 
     <?php
         include("funciones.php");
-        if($_SESSION) {
-          if(validaradmin() == 1) {
+        if(isset($_SESSION)) {
+          if(validar($_SESSION['rol']) == 0) {
             echo "Hola ".$_SESSION['nombre']."!";
             if(isset($_POST['Buscar'])) {
               ?>

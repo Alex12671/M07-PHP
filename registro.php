@@ -9,7 +9,7 @@
       <?php
         if(isset($_POST['DNI'])) {
           include("funciones.php");
-          registrar($_POST);
+          registrar($_POST['DNI'],$_POST['Email'],$_POST['Nom'],$_POST['Cognoms'],$_POST['Edat'],$_POST['Password']);
         }
         else {?>
       <form  id="login" method="POST" enctype="multipart/form-data">

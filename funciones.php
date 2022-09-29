@@ -83,52 +83,9 @@ function validar($rol) {
     
 }
 
-function registrar($dades) {
+function registrar($dni,$email,$nom,$cognoms,$edat,$password) {
+
     $conn = conectar();
-    foreach($dades as $field_name => $value) {
-      
-        if($field_name == "DNI") {
-
-            $dni = $value;
-            $query = "INSERT INTO alumnes($field_name) VALUES ('$value')";
-
-            if(!mysqli_query($conn,$query)) {
-            
-                echo "Fallo al realizar la consulta";
-                echo '<meta http-equiv="refresh" content="2;url=login.php" />';
-                
-            } 
-
-        }
-        
-        else if($field_name == "Password") {
-
-            $query = "UPDATE alumnes SET $field_name = '".md5($value)."' WHERE DNI = '$dni'";
-          
-            if(!mysqli_query($conn,$query)) {
-            
-            echo "Fallo al realizar la consulta";
-            echo '<meta http-equiv="refresh" content="2;url=login.php" />';
-            
-            } 
-
-        }
-
-        else {
-  
-          $query = "UPDATE alumnes SET $field_name = '$value' WHERE DNI = '$dni'";
-          
-          if(!mysqli_query($conn,$query)) {
-          
-            echo "Fallo al realizar la consulta";
-            echo '<meta http-equiv="refresh" content="2;url=login.php" />';
-            
-          } 
-
-        }
-  
-        
-    } 
     
     $filename = $_FILES['Foto']['name'];
     $destination = 'alumnes/'.$filename;
@@ -144,16 +101,20 @@ function registrar($dades) {
             
         if (move_uploaded_file($file, $destination)) {
 
-            $query = "UPDATE alumnes SET Foto = '$destination' WHERE DNI = '$dni'";
+            $query = "INSERT INTO alumnes VALUES ('$dni','$email','$nom','$cognoms','$edat','$destination','".md5($password)."')"; 
         
             if(!mysqli_query($conn,$query)) {
                     
             echo "Fallo al realizar la consulta";
             echo '<meta http-equiv="refresh" content="2;url=login.php" />';
                     
-            }
+            }    
+            else {
 
-            
+                echo "Usuario registrado correctamente";
+                echo "<meta http-equiv=refresh content='2; url=index.php'>";
+
+            }
 
         } 
         else {
@@ -163,35 +124,29 @@ function registrar($dades) {
     
         }
     }
-    echo "Usuario registrado correctamente";
-    echo "<meta http-equiv=refresh content='2; url=index.php'>";
+    
+
     
 }
 
-function añadirCurso($form) {
+function añadirCurso($nom,$descripcio,$hores_duracio,$data_inici,$data_final,$dni) {
+    
     $conn = conectar();
-    foreach($form as $field_name => $value) {
-      
-        if($field_name == "Nom") {
-        $nom = $value;
-        $query = "INSERT INTO cursos($field_name) VALUES ('$value')";
-        }
+    $query = "INSERT INTO cursos VALUES ('$nom','$descripcio','$hores_duracio','$data_inici','$data_final','$dni')"; 
+
+    if(!mysqli_query($conn,$query)) {
+          
+        echo "Fallo al realizar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=cursos.php" />';
         
-        else {
-  
-          $query = "UPDATE cursos SET $field_name = '$value' WHERE Nom = '$nom'";
-          
-        }
-  
-        if(!mysqli_query($conn,$query)) {
-          
-          echo "Fallo al realizar la consulta";
-          echo '<meta http-equiv="refresh" content="2;url=cursos.php" />';
-          
-        } 
-    }  
-    echo "Datos introducidos correctamente";
-    echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+    } 
+    else {
+
+        echo "Curso añadido correctamente";
+        echo "<meta http-equiv=refresh content='2; url=cursos.php'>";
+
+    }
+    
 }
 
 function borrarCurso($codi,$estado) {
@@ -470,52 +425,9 @@ function mostrarProfesores() {
 }
 
 
-function añadirProfesor($form) {
+function añadirProfesor($dni,$email,$nom,$cognoms,$titol,$password) {
+
     $conn = conectar();
-    foreach($form as $field_name => $value) {
-        if($field_name == "DNI") {
-
-            $dni = $value;
-            $query = "INSERT INTO professors($field_name) VALUES ('$value')";
-
-            if(!mysqli_query($conn,$query)) {
-                
-                echo "Fallo al realizar la consulta";
-                echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
-                
-            }
-        }
-
-
-        else if($field_name == "Password") {
-
-            $query = "UPDATE professors SET $field_name = '".md5($value)."' WHERE DNI = '$dni'";
-          
-            if(!mysqli_query($conn,$query)) {
-            
-            echo "Fallo al realizar la consulta";
-            echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
-            
-            } 
-
-        }
-
-
-        else {
-  
-          $query = "UPDATE professors SET $field_name = '$value' WHERE DNI = '$dni'";
-          
-          if(!mysqli_query($conn,$query)) {
-          
-            echo "Fallo al realizar la consulta";
-            echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
-            
-          } 
-
-        }
-  
-        
-    } 
     
     $filename = $_FILES['Foto']['name'];
     $destination = 'professors/'.$filename;
@@ -531,16 +443,20 @@ function añadirProfesor($form) {
             
         if (move_uploaded_file($file, $destination)) {
 
-            echo "<p class=exito>Archivo subido con éxito</p>";
-            $query = "UPDATE professors SET Foto = '$destination' WHERE DNI = '$dni'";
-        
+            $query = "INSERT INTO professors VALUES ('$dni','$email','$nom','$cognoms','$titol','$destination','".md5($password)."')";
+            
             if(!mysqli_query($conn,$query)) {
                     
             echo "Fallo al realizar la consulta";
             echo '<meta http-equiv="refresh" content="2;url=profesores.php" />';
                     
             }
+            else {
 
+                echo "Profesor añadido correctamente";
+                echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+
+            }
             
 
         } 
@@ -553,8 +469,7 @@ function añadirProfesor($form) {
     }
     
 
-    echo "Datos introducidos correctamente";
-    echo "<meta http-equiv=refresh content='2; url=profesores.php'>";
+    
 }
 
 

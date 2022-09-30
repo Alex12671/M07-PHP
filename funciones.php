@@ -944,7 +944,6 @@ function listarCursosMatriculados($email) {
                 }
                 if($array['Data_Final'] < date("Y-m-d")) {
                     
-                    $query = "SELECT Nota"
                     echo "<td> Prueba </td>";
     
                 }

@@ -22,7 +22,6 @@ function loginAdmin($username,$password) {
         if(md5($password) == $credenciales[1] && $username == $credenciales[0]) {
 
             $_SESSION['nombre'] = $username;
-            $_SESSION['passwd'] = $password; 
             $_SESSION['rol'] = 0;
             echo "<meta http-equiv=refresh content='0; url=administracion.php'>";
         }
@@ -45,7 +44,6 @@ function login($email,$password,$rol) {
         if(mysqli_num_rows($result) == 1) {
             $credenciales = mysqli_fetch_row($result);
             $_SESSION['nombre'] = $credenciales[2];
-            $_SESSION['passwd'] = $password; 
             $_SESSION['email'] = $email; 
             $_SESSION['rol'] = 1;
             echo "<meta http-equiv=refresh content='0; url=inicioprofesores.php'>";
@@ -65,7 +63,6 @@ function login($email,$password,$rol) {
         if(mysqli_num_rows($result) == 1) {
             $credenciales = mysqli_fetch_row($result);
             $_SESSION['nombre'] = $credenciales[2];
-            $_SESSION['passwd'] = $password; 
             $_SESSION['email'] = $email; 
             $_SESSION['rol'] = 2;
             echo "<meta http-equiv=refresh content='0; url=inicioalumnos.php'>";
@@ -769,42 +766,256 @@ function modificarProfesor($dni) {
     
 }
 
-function listarCursos($email) {
+
+function listarCursosDisponibles($email) {
+
+    $conn = conectar();
+    mostrarColumnasCursos();
+    echo "<th>Matricularse/Darse de baja</th>";
+    echo "</thead>";
+    $today = date("Y-m-d");
+    $query = "SELECT * FROM cursos WHERE Data_Inici > '$today' AND Activado = 1";
+    $result = mysqli_query($conn,$query);
+    if (!$result) {
+        echo "Fallo al ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+    }
+    else {
+        while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+            echo "<tbody>";
+            echo "<tr>"; 
+            foreach ($array as $field_name => $value) {
+
+                if($field_name == "Foto") {
+
+                    $src = 'img/cross.png';
+
+                }
+                
+                else if ($field_name != "Activado") {
+
+                    echo "<td>$value</td>";
+
+                }
+                
+            }
+
+            $query = "SELECT DNI FROM alumnes WHERE Email = '$email'"; 
+            $row = mysqli_fetch_row(mysqli_query($conn,$query));
+            $dni = $row[0];
+            $query = "SELECT * FROM matricula WHERE DNI = '$dni' AND Codi = '".$array['Codi']."' ";
+            if(mysqli_num_rows(mysqli_query($conn,$query)) == 0) {
+
+                echo "<td> <a href=matricularse.php?codi=".$array['Codi']." > <img src='img/matricula.png' style='width:42px;height:42px;'> </img></a> </td>";
+
+            }
+            else if(mysqli_num_rows(mysqli_query($conn,$query)) == 1) {
+
+                echo "<td> <a href=desmatricularse.php?codi=".$array['Codi']." > <img src='img/cross.png' style='width:42px;height:42px;'> </img></a> </td>";
+
+            }
+        }
+            
+        echo "</tbody>";
+        echo "</table>";  
+    }
+    
+    
+
+}
+
+function matricularse($codi,$email) {
+
+    $conn = conectar();
+    $query = "SELECT DNI FROM alumnes WHERE Email = '$email'";
+
+    $result = mysqli_query($conn,$query);
+    if(!$result) {
+
+        echo "No se ha podido ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+
+    }
+    else {
+        
+        //recogemos la fila que sale para tener el dni
+        $row = mysqli_fetch_row($result);
+        $query = "INSERT INTO matricula VALUES('".$row[0]."','$codi')";
+
+        if(!mysqli_query($conn,$query)) {
+
+            echo "No se ha podido ejecutar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+    
+        }
+        else {
+
+            echo "Has sido matriculado correctamente";
+            echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+
+        }
+    }
+    
+
+
+}
+
+function desmatricularse($codi,$email) {
+
+    $conn = conectar();
+    $query = "SELECT DNI FROM alumnes WHERE Email = '$email'";
+
+    $result = mysqli_query($conn,$query);
+    if(!$result) {
+
+        echo "No se ha podido ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+
+    }
+    else {
+        
+        //recogemos la fila que sale para tener el dni
+        $row = mysqli_fetch_row($result);
+        $query = "DELETE FROM matricula WHERE DNI = '".$row[0]."' AND Codi = '$codi' ";
+        
+        if(!mysqli_query($conn,$query)) {
+            
+            echo "No se ha podido ejecutar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+    
+        }
+        else {
+
+            echo "Has sido dado de baja correctamente";
+            echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+
+        }
+    }
+    
+
+
+}
+
+function listarCursosMatriculados($email) {
+
+    $conn = conectar();
+    $query = "SELECT DNI FROM alumnes WHERE Email = '$email'";
+
+    $result = mysqli_query($conn,$query);
+    if(!$result) {
+
+        echo "No se ha podido ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+
+    }
+    else {
+        
+        //recogemos la fila que sale para tener el dni
+        $row = mysqli_fetch_row($result);
+        $query = "SELECT c.Codi,c.Nom,c.Descripcio,c.Hores_Duracio,c.Data_Inici,c.Data_Final,c.DNI FROM matricula m INNER JOIN cursos c ON m.Codi = c.Codi WHERE m.DNI = '".$row['0']."' ";
+        $result = mysqli_query($conn,$query);
+        if(!$result) {
+            
+            echo "No se ha podido ejecutar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+    
+        }
+        else {
+            mostrarColumnasCursos();
+            echo "<th>Nota</th>";
+            while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+
+                echo "<tbody>";
+                echo "<tr>"; 
+                foreach ($array as $field_name => $value) {
+
+                    if($field_name == "Foto") {
+
+                        $src = 'img/cross.png';
+
+                    }
+                    
+                    else if ($field_name != "Activado") {
+
+                        echo "<td>$value</td>";
+
+                    }
+                    
+                }
+                if($array['Data_Final'] < date("Y-m-d")) {
+                    
+                    $query = "SELECT Nota"
+                    echo "<td> Prueba </td>";
+    
+                }
+                else {
+
+                    echo "<td> No disponible </td>";
+
+                }
+            }
+            
+            
+
+        }
+    }
+
+}
+
+
+//esta es para los profes xd
+/*function listarCursos($email) {
 
     $conn = conectar();
     mostrarColumnasCursos();
     echo "</thead>";
-    $query = "SELECT * FROM cursos c INNER JOIN professors p ON c.DNI = p.DNI WHERE p.Email LIKE '$email'";
-    $result = $conn->query($query);
+    $query = "SELECT DNI FROM professors WHERE Email = '$email'"; 
+    $result = mysqli_query($conn,$query);
+    
     if (!$result) {
+        
         echo "Fallo al ejecutar la consulta";
         echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
+    
     }
     else {
-        while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
-        echo "<tbody>";
-        echo "<tr>"; 
-        foreach ($array as $field_name => $value) {
 
-            if($field_name == "Foto") {
+        $dni = mysqli_fetch_array($result,MYSQLI_NUM)[0];
+        $today = date("Y-m-d");
+        $query = "SELECT * FROM cursos WHERE DNI = '$dni' AND Data_Final > '$today'";
+        $result = mysqli_query($conn,$query);
+        if (!$result) {
+            echo "Fallo al ejecutar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
+        }
+        else {
+            while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
+            echo "<tbody>";
+            echo "<tr>"; 
+            foreach ($array as $field_name => $value) {
 
-                $src = 'img/cross.png';
+                if($field_name == "Foto") {
 
+                    $src = 'img/cross.png';
+
+                }
+                
+                else if ($field_name != "Activado") {
+
+                    echo "<td>$value</td>";
+
+                }
+                
             }
             
-            else if ($field_name != "Activado") {
-
-                echo "<td>$value</td>";
-
             }
-            
+            echo "</tbody>";
+            echo "</table>";  
         }
-        
-        }
-        echo "</tbody>";
-        echo "</table>";  
     }
+    
 
-}
+}*/
+
 
 ?>

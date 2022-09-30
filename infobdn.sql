@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-09-2022 a las 10:42:47
+-- Tiempo de generación: 30-09-2022 a las 08:31:52
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -60,6 +60,7 @@ CREATE TABLE `alumnes` (
 --
 
 INSERT INTO `alumnes` (`DNI`, `Email`, `Nom`, `Cognoms`, `Edat`, `Foto`, `Password`) VALUES
+('42965325B', 'mateo@mail.es', 'Mateo', 'Rodríguez', 25, 'alumnes/alumno.png', '202cb962ac59075b964b07152d234b70'),
 ('78264915P', 'martin@mail.es', 'Martin', 'Pérez', 19, 'alumnes/maxresdefault.jpg', '6e6e2ddb6346ce143d19d79b3358c16a');
 
 -- --------------------------------------------------------
@@ -84,10 +85,11 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`Codi`, `Nom`, `Descripcio`, `Hores_Duracio`, `Data_Inici`, `Data_Final`, `DNI`, `Activado`) VALUES
-(1, 'Mates', 'pues no se bro mates', 528, '2022-10-18', '2022-11-18', '23456789A', 0),
-(8, 'Historia', 'historia españa', 236, '2022-09-29', '2022-10-07', '23456789A', 0),
+(1, 'Mates', 'pues no se bro mates', 528, '2022-10-18', '2022-11-18', '23456789A', 1),
+(8, 'Historia', 'historia españa', 236, '2022-09-29', '2022-10-07', '23456789A', 1),
 (9, 'English', 'English bruh', 420, '2022-09-28', '2022-10-08', '54821569L', 1),
-(11, 'Programacion', 'Programar en C', 69, '2022-09-28', '2022-10-06', '54821569L', 1);
+(11, 'Programacion', 'Programar en C', 69, '2022-09-28', '2022-10-06', '54821569L', 0),
+(13, 'Aleman', 'Curso básico aleman', 212, '2022-10-09', '2022-10-26', '12345678A', 1);
 
 -- --------------------------------------------------------
 
@@ -108,6 +110,7 @@ CREATE TABLE `matricula` (
 
 CREATE TABLE `professors` (
   `DNI` varchar(9) NOT NULL,
+  `Email` varchar(255) NOT NULL,
   `Nom` varchar(90) NOT NULL,
   `Cognoms` varchar(255) NOT NULL,
   `Titol_Academic` varchar(255) NOT NULL,
@@ -120,9 +123,11 @@ CREATE TABLE `professors` (
 -- Volcado de datos para la tabla `professors`
 --
 
-INSERT INTO `professors` (`DNI`, `Nom`, `Cognoms`, `Titol_Academic`, `Foto`, `Password`, `Activado`) VALUES
-('23456789A', 'Jose', 'Rodriguez', 'Física', 'professors/maxresdefault.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 0),
-('54821569L', 'Juan', 'sssssss', 'Experto en Dokkan', 'professors/19-04-10Jaime-Nubiola.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 1);
+INSERT INTO `professors` (`DNI`, `Email`, `Nom`, `Cognoms`, `Titol_Academic`, `Foto`, `Password`, `Activado`) VALUES
+('12345678A', 'jesucristo@mail.es', 'Jesucristo', 'Superstar', 'Experto en morir jaja', 'professors/Pablo.jpg', '202cb962ac59075b964b07152d234b70', 1),
+('23456789A', 'jose@mail.es', 'Jose', 'Rodriguez', 'Física', 'professors/maxresdefault.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 0),
+('54821569L', 'juanito@mail.com', 'Juan', 'sssssss', 'Experto en Dokkan', 'professors/19-04-10Jaime-Nubiola.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 1),
+('54821696P', 'matias@mail.es', 'Matias', 'Marin', 'Profesor de alemán', 'professors/bruh.jpg', '202cb962ac59075b964b07152d234b70', 1);
 
 --
 -- Índices para tablas volcadas
@@ -144,8 +149,7 @@ ALTER TABLE `alumnes`
 -- Indices de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  ADD PRIMARY KEY (`Codi`),
-  ADD UNIQUE KEY `Nom` (`Nom`);
+  ADD PRIMARY KEY (`Codi`);
 
 --
 -- Indices de la tabla `matricula`
@@ -157,7 +161,8 @@ ALTER TABLE `matricula`
 -- Indices de la tabla `professors`
 --
 ALTER TABLE `professors`
-  ADD PRIMARY KEY (`DNI`);
+  ADD PRIMARY KEY (`DNI`),
+  ADD UNIQUE KEY `Email` (`Email`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -167,7 +172,7 @@ ALTER TABLE `professors`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `Codi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Codi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `matricula`

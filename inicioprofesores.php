@@ -6,7 +6,7 @@ session_start();
   <head>
     <link rel="stylesheet">
     <meta charset="utf-8">
-    <title>Panel de control admin</title>
+    <title>Panel de control profesores</title>
   </head>
     <body>
 
@@ -17,9 +17,8 @@ session_start();
             echo "Bienvenido ".$_SESSION['nombre']."!";
             ?>
               <br/><a href="sortir.php">Sortir de la sessió</a>
-              <a href="cursos.php">Administrar cursos</a>
-              <a href="profesores.php">Administrar profesores</a>
             <?php
+            listarCursos($_SESSION['email']);
           }
           else {
             echo "Solo los profesores pueden ver esta página";

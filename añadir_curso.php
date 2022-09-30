@@ -6,7 +6,7 @@ session_start();
   <head>
     <link rel="stylesheet">
     <meta charset="utf-8">
-    <title>Añadir Curso</title>
+    <title>Añadir Curso</title> 
   </head>
     <body>
 
@@ -15,7 +15,7 @@ session_start();
     if(isset($_SESSION)) {
         if(validar($_SESSION['rol']) == 0) {
           if(isset($_POST['Nom'])) {
-            añadirCurso($_POST);
+            añadirCurso($_POST['Nom'],$_POST['Descripcio'],$_POST['Hores_Duracio'],$_POST['Data_Inici'],$_POST['Data_Final'],$_POST['DNI']);
             }
             else {
               ?>

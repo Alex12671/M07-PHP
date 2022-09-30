@@ -44,12 +44,32 @@ function login($email,$password,$rol) {
         $result = mysqli_query($conn,$query);
         if(mysqli_num_rows($result) == 1) {
             $credenciales = mysqli_fetch_row($result);
-            if(md5($password) == $credenciales[6] && $email == $credenciales[1]) {
-                $_SESSION['nombre'] = $credenciales[2];
-                $_SESSION['passwd'] = $password; 
-                $_SESSION['rol'] = 1;
-                echo "<meta http-equiv=refresh content='0; url=inicioprofesores.php'>";
-            }
+            $_SESSION['nombre'] = $credenciales[2];
+            $_SESSION['passwd'] = $password; 
+            $_SESSION['email'] = $email; 
+            $_SESSION['rol'] = 1;
+            echo "<meta http-equiv=refresh content='0; url=inicioprofesores.php'>";
+            
+            
+        }
+        else {
+            echo "Las credenciales son incorrectas";
+            echo "<meta http-equiv=refresh content='2; url=index.php'>";
+        }
+
+    }
+    else {
+
+        $query = "SELECT * FROM alumnes WHERE Email = '$email' AND Password = '".md5($password)."'";
+        $result = mysqli_query($conn,$query);
+        if(mysqli_num_rows($result) == 1) {
+            $credenciales = mysqli_fetch_row($result);
+            $_SESSION['nombre'] = $credenciales[2];
+            $_SESSION['passwd'] = $password; 
+            $_SESSION['email'] = $email; 
+            $_SESSION['rol'] = 2;
+            echo "<meta http-equiv=refresh content='0; url=inicioalumnos.php'>";
+            
             
         }
         else {
@@ -132,7 +152,7 @@ function registrar($dni,$email,$nom,$cognoms,$edat,$password) {
 function añadirCurso($nom,$descripcio,$hores_duracio,$data_inici,$data_final,$dni) {
     
     $conn = conectar();
-    $query = "INSERT INTO cursos VALUES ('$nom','$descripcio','$hores_duracio','$data_inici','$data_final','$dni')"; 
+    $query = "INSERT INTO cursos VALUES (DEFAULT,'$nom','$descripcio','$hores_duracio','$data_inici','$data_final','$dni','1')"; 
 
     if(!mysqli_query($conn,$query)) {
           
@@ -276,55 +296,56 @@ function mostrarColumnasCursos() {
                 }
                 
             }  
-            echo "<th>Modificar</th>";
-            echo "<th>Act./Desact.</th>";
+            
             
         }
 }
 
 function mostrarCursos() {
-          $conn = conectar();
-          mostrarColumnasCursos();
-          echo "</thead>";
-          $query = "SELECT * FROM cursos ORDER BY Codi";
-          $result = $conn->query($query);
-          if (!$result) {
-              echo "Fallo al ejecutar la consulta";
-              echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
-          }
-          else {
-              while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
-                echo "<tbody>";
-                echo "<tr>"; 
-                foreach ($array as $field_name => $value) {
+    $conn = conectar();
+    mostrarColumnasCursos();
+    echo "<th>Modificar</th>";
+    echo "<th>Act./Desact.</th>";
+    echo "</thead>";
+    $query = "SELECT * FROM cursos ORDER BY Codi";
+    $result = $conn->query($query);
+    if (!$result) {
+        echo "Fallo al ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
+    }
+    else {
+        while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
+        echo "<tbody>";
+        echo "<tr>"; 
+        foreach ($array as $field_name => $value) {
 
-                    if ($field_name == "Activado") {
+            if ($field_name == "Activado") {
 
-                        if($value == '1') {
+                if($value == '1') {
 
-                            $src = 'img/tick.png';
+                    $src = 'img/tick.png';
 
-                        }
-                        else {
-
-                            $src = 'img/cross.png';
-
-                        }
-                    }
-                    else {
-
-                        echo "<td>$value</td>";
-
-                    }
-                    
                 }
-                echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
-                echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
-                
-              }
-              echo "</tbody>";
-              echo "</table>";  
-          }
+                else {
+
+                    $src = 'img/cross.png';
+
+                }
+            }
+            else {
+
+                echo "<td>$value</td>";
+
+            }
+            
+        }
+        echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
+        echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
+        
+        }
+        echo "</tbody>";
+        echo "</table>";  
+    }
 }
   
 function listarProfesores() {
@@ -443,7 +464,7 @@ function añadirProfesor($dni,$email,$nom,$cognoms,$titol,$password) {
             
         if (move_uploaded_file($file, $destination)) {
 
-            $query = "INSERT INTO professors VALUES ('$dni','$email','$nom','$cognoms','$titol','$destination','".md5($password)."')";
+            $query = "INSERT INTO professors VALUES ('$dni','$email','$nom','$cognoms','$titol','$destination','".md5($password)."','1')";
             
             if(!mysqli_query($conn,$query)) {
                     
@@ -748,5 +769,42 @@ function modificarProfesor($dni) {
     
 }
 
+function listarCursos($email) {
+
+    $conn = conectar();
+    mostrarColumnasCursos();
+    echo "</thead>";
+    $query = "SELECT * FROM cursos c INNER JOIN professors p ON c.DNI = p.DNI WHERE p.Email LIKE '$email'";
+    $result = $conn->query($query);
+    if (!$result) {
+        echo "Fallo al ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
+    }
+    else {
+        while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
+        echo "<tbody>";
+        echo "<tr>"; 
+        foreach ($array as $field_name => $value) {
+
+            if($field_name == "Foto") {
+
+                $src = 'img/cross.png';
+
+            }
+            
+            else if ($field_name != "Activado") {
+
+                echo "<td>$value</td>";
+
+            }
+            
+        }
+        
+        }
+        echo "</tbody>";
+        echo "</table>";  
+    }
+
+}
 
 ?>

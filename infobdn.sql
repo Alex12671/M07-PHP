@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-09-2022 a las 08:31:52
+-- Tiempo de generación: 01-10-2022 a las 09:18:10
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -85,11 +85,11 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`Codi`, `Nom`, `Descripcio`, `Hores_Duracio`, `Data_Inici`, `Data_Final`, `DNI`, `Activado`) VALUES
-(1, 'Mates', 'pues no se bro mates', 528, '2022-10-18', '2022-11-18', '23456789A', 1),
+(1, 'Mates', 'pues no se bro mates', 528, '2022-10-18', '2022-09-18', '54821696P', 1),
 (8, 'Historia', 'historia españa', 236, '2022-09-29', '2022-10-07', '23456789A', 1),
 (9, 'English', 'English bruh', 420, '2022-09-28', '2022-10-08', '54821569L', 1),
 (11, 'Programacion', 'Programar en C', 69, '2022-09-28', '2022-10-06', '54821569L', 0),
-(13, 'Aleman', 'Curso básico aleman', 212, '2022-10-09', '2022-10-26', '12345678A', 1);
+(13, 'Aleman', 'Curso básico aleman', 212, '2022-10-09', '2022-10-26', '54821696P', 1);
 
 -- --------------------------------------------------------
 
@@ -99,8 +99,17 @@ INSERT INTO `cursos` (`Codi`, `Nom`, `Descripcio`, `Hores_Duracio`, `Data_Inici`
 
 CREATE TABLE `matricula` (
   `DNI` varchar(9) NOT NULL,
-  `Codi` int(11) NOT NULL
+  `Codi` int(11) NOT NULL,
+  `Nota` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `matricula`
+--
+
+INSERT INTO `matricula` (`DNI`, `Codi`, `Nota`) VALUES
+('42965325B', 1, 5),
+('78264915P', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -155,7 +164,8 @@ ALTER TABLE `cursos`
 -- Indices de la tabla `matricula`
 --
 ALTER TABLE `matricula`
-  ADD PRIMARY KEY (`Codi`,`DNI`);
+  ADD PRIMARY KEY (`Codi`,`DNI`),
+  ADD KEY `FK_ActiveDirectories_DNI` (`DNI`);
 
 --
 -- Indices de la tabla `professors`
@@ -178,7 +188,18 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `matricula`
 --
 ALTER TABLE `matricula`
-  MODIFY `Codi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `matricula`
+--
+ALTER TABLE `matricula`
+  ADD CONSTRAINT `FK_ActiveDirectories_Codi` FOREIGN KEY (`Codi`) REFERENCES `cursos` (`Codi`),
+  ADD CONSTRAINT `FK_ActiveDirectories_DNI` FOREIGN KEY (`DNI`) REFERENCES `alumnes` (`DNI`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -921,52 +921,80 @@ function listarCursosMatriculados($email) {
     
         }
         else {
-            mostrarColumnasCursos();
-            echo "<th>Nota</th>";
-            while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
 
-                echo "<tbody>";
-                echo "<tr>"; 
-                foreach ($array as $field_name => $value) {
+            if(mysqli_num_rows($result) == 0) {
 
-                    if($field_name == "Foto") {
+                echo "<h2>Vaya, parece que no estás matriculado en ningún curso :(";    
 
-                        $src = 'img/cross.png';
-
-                    }
-                    
-                    else if ($field_name != "Activado") {
-
-                        echo "<td>$value</td>";
-
-                    }
-                    
-                }
-                if($array['Data_Final'] < date("Y-m-d")) {
-                    
-                    echo "<td> Prueba </td>";
-    
-                }
-                else {
-
-                    echo "<td> No disponible </td>";
-
-                }
             }
-            
-            
+            else {
+
+                mostrarColumnasCursos();
+                echo "<th>Nota</th>";
+                while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+    
+                    echo "<tbody>";
+                    echo "<tr>"; 
+                    foreach ($array as $field_name => $value) {
+    
+                        if($field_name == "Foto") {
+    
+                            $src = 'img/cross.png';
+    
+                        }
+                        
+                        else if ($field_name != "Activado") {
+    
+                            echo "<td>$value</td>";
+    
+                        }
+                        
+                    }
+                    if($array['Data_Final'] < date("Y-m-d")) {
+                        
+                        echo "<td> Prueba </td>";
+        
+                    }
+                    else {
+    
+                        echo "<td> No disponible </td>";
+    
+                    }
+                
+                }
+    
+            }
 
         }
+        
+
+
+
+        
+        
+        
+        
     }
 
 }
 
 
 //esta es para los profes xd
-/*function listarCursos($email) {
+function listarCursos($email) {
 
     $conn = conectar();
-    mostrarColumnasCursos();
+    echo "<table cellspacing=0>";
+    echo "<thead>";
+    echo "<th>DNI</th>";
+    echo "<th>Email</th>";
+    echo "<th>Nom</th>";
+    echo "<th>Cognoms</th>";
+    echo "<th>Foto</th>";
+    echo "<th>Codi Curs</th>";
+    echo "<th>Nom Curs</th>";
+    echo "<th>Data inici</th>";
+    echo "<th>Data final</th>";
+    echo "<th>Nota</th>";
     echo "</thead>";
     $query = "SELECT DNI FROM professors WHERE Email = '$email'"; 
     $result = mysqli_query($conn,$query);
@@ -974,38 +1002,61 @@ function listarCursosMatriculados($email) {
     if (!$result) {
         
         echo "Fallo al ejecutar la consulta";
-        echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
+        echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
     
     }
     else {
 
         $dni = mysqli_fetch_array($result,MYSQLI_NUM)[0];
         $today = date("Y-m-d");
-        $query = "SELECT * FROM cursos WHERE DNI = '$dni' AND Data_Final > '$today'";
+        $query = " SELECT a.DNI,a.Email,a.Nom,a.Cognoms,a.Foto,c.Codi,c.Nom AS Nom_Curs,c.Data_Inici,c.Data_Final,m.Nota FROM alumnes a INNER JOIN matricula m ON a.DNI = m.DNI INNER JOIN cursos c ON m.Codi = c.Codi WHERE c.DNI = '$dni'";
         $result = mysqli_query($conn,$query);
         if (!$result) {
             echo "Fallo al ejecutar la consulta";
-            echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
+            echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
         }
         else {
-            while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
+            while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
             echo "<tbody>";
             echo "<tr>"; 
             foreach ($array as $field_name => $value) {
-
+                
                 if($field_name == "Foto") {
 
-                    $src = 'img/cross.png';
+                    echo "<td><img src='$value' style='width:42px;height:42px;'></img></td>";
 
                 }
                 
-                else if ($field_name != "Activado") {
+                else if($field_name == "Nota") {
+
+
+                    if($array['Data_Final'] < $today) {
+                        
+                        if($value == null) {
+
+                            echo "<td> <a href=ponernota.php?codi=".$array['Codi']."&id=".$array['DNI']." > <img src='img/nota.png' style='width:30px;height:30px;'> </img></a> </td>";
+        
+                        }
+                        else {
+
+                            echo "<td>$value</td>";
+    
+                        }
+        
+                    }
+                    
+                    
+
+                }
+                else {
 
                     echo "<td>$value</td>";
 
                 }
                 
             }
+            
+            
             
             }
             echo "</tbody>";
@@ -1014,7 +1065,26 @@ function listarCursosMatriculados($email) {
     }
     
 
-}*/
+}
 
+
+function ponerNota($codi,$dni,$nota) {
+
+    $conn = conectar();
+    $query = "UPDATE matricula SET Nota = '$nota' WHERE DNI = '$dni' AND Codi = '$codi'";
+    
+    if(!mysqli_query($conn,$query)) {
+
+        echo "Fallo al ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
+
+    }
+    else {
+
+        echo "Nota puesta correctamente";
+        echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
+    }
+
+}
 
 ?>

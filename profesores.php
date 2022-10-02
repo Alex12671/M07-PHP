@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="profesores.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/profesores.css">
     <meta charset="utf-8">
     <title>Profesores</title>
   </head>

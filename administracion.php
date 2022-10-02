@@ -4,21 +4,32 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="stylesheets/administracion.css">
     <meta charset="utf-8">
     <title>Panel de control admin</title>
   </head>
     <body>
-
+      <header>
+            <h1 class="inicio">Panel de administración</h1>
+          <img src="img/logo.png" alt="logo"></img>
+          <nav class="menu">
+            <ul>
+              
+              <li ><a class="admin" href="login_admin.php">Cerrar sesión</a></li>
+            </ul>
+          </nav>
+      </header>
     <?php
         include("funciones.php");
         if($_SESSION) {
           if(validar($_SESSION['rol']) == 0) {
-            echo "Hola ".$_SESSION['nombre']."!";
-            ?>
-              <br/><a href="sortir.php">Sortir de la sessió</a>
-              <a href="cursos.php">Administrar cursos</a>
-              <a href="profesores.php">Administrar profesores</a>
+          ?>  <div id="panelAdmin">
+                <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1>
+                <div id="botones">
+                  <a class="cursos" href="cursos.php">Administrar cursos</a>
+                  <a class="profesores" href="profesores.php">Administrar profesores</a>
+                </div>
+              </div>
             <?php
           }
           else {

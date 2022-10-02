@@ -1,0 +1,151 @@
+body {
+    margin: 0;
+    background-color: gainsboro;
+ }
+ header {
+    display:grid;
+    grid-template-columns:1fr 2fr 1fr;
+    grid-template-rows:1;
+    background-color: #4285f4;
+    padding:0.5%;
+    margin-bottom:5%;
+ }
+ 
+ .inicio {
+    grid-column-start:2;
+    grid-row-start:1;
+    align-self:center;
+    justify-self: center;
+    font-size:calc(11px + 3vw);
+    font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
+    color:white;
+    text-align:center;
+    margin:2% 0px 0px 0;
+ }
+ 
+ nav {
+ grid-column-start:3;
+ grid-row-start:0;
+ align-self: end;
+ justify-self:center;
+ }
+ 
+ ul { 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align:center;
+ }
+ 
+ li {
+    margin-bottom:6%;
+    
+ }
+ 
+ 
+ 
+ .admin {
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: none;
+    font-size:calc(8px + 1vw);
+ 
+ }
+ 
+ 
+ .admin:hover {
+    text-decoration: underline;
+    color:black;
+ }
+ 
+ 
+ img{
+    grid-column-start: 1;
+    grid-row-start: 1;
+    align-self:center;
+    width:18%;
+    min-width:60px;
+    border-radius:40%;
+ }
+ 
+ #panelAdmin {
+    background-color: white;
+    display: grid;
+    grid-template-columns:1fr;
+    grid-template-rows:1fr 2fr;
+    width: 100%;
+    max-width:30em;
+    margin:0 auto;
+    padding-top:0;
+    border-radius:15px;
+ }
+
+ .bienvenida {
+    grid-row-start:1;
+    align-self: center;
+    text-align:center;
+    font-family:'Franklin Gothic Medium','Arial Narrow', Arial, sans-serif;
+    color:white;
+    font-size: 20px;
+    background-color:#4285f4;
+    margin:0 auto;
+    width:100%;
+    max-width:30em;
+    padding-bottom:4%;
+    padding-top:4%;
+    border-top-left-radius:15px;
+    border-top-right-radius: 15px;
+    margin-bottom:4%;
+ }
+ 
+#botones {
+    grid-row-start:2;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-self:center;
+    
+}
+
+.cursos {
+    grid-column:1;
+    grid-row:1;
+    place-self:center;
+    width:70%;
+    text-align:center;
+    color: white;
+    background-color: #4285f4;
+    border:1px solid #4285f4;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-    serif;
+    text-decoration: none;
+    font-size:calc(12px + 0.35vw);
+    border-radius: 15px;
+    padding:5%;
+ }
+ 
+ .cursos:hover {
+    background-color: white;
+    color:#4285f4;
+    text-decoration: underline;
+ }
+
+ .profesores {
+    grid-column:2;
+    grid-row:1;
+    place-self:center;
+    width:70%;
+    text-align:center;
+    color: black;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-    serif;
+    text-decoration: none;
+    font-size:calc(12px + 0.35vw);
+    border:1px solid black;
+    border-radius: 15px;
+    padding: 5%;
+ }
+ 
+ .profesores:hover {
+    color:white;
+    text-decoration: underline;
+    background-color:black;
+ }

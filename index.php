@@ -4,16 +4,17 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="login.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/login.css">
     <meta charset="utf-8">
     <title>Iniciar Sesión</title>
   </head>
     <body>
         <header>
+          <h1 class="inicio">Página de inicio</h1>
         <img src="img/logo.png" alt="logo"></img>
         <nav class="menu">
           <ul>
-            <li><a href="registro.php">Regístrate aquí</a></li>
+            
             <li class="admin"><a href="login_admin.php">Acceder a administración</a></li>
           </ul>
         </nav>
@@ -25,8 +26,7 @@ session_start();
     }
     else{?>
       <div id="formularioLogin">
-       <h1>InfoBDN</h1>
-        <div class="formulario">
+       <h1 class="tituloForm">InfoBDN</h1>
         <form  id="login" method="POST" class="login">
           <br/>
             <input type="email" id="email" name="email" placeholder="Ingresa el email" required><br/>
@@ -39,10 +39,9 @@ session_start();
             <label for="profesor">Profesor 
               <input type="radio" id="profesor" name="rol" value="profesor" required><br/>
 
-            <button type="submit" >Iniciar sesión</button><br/>
-
-        </form>
-        </div>
+            <button type="submit" >Iniciar sesión</button>
+            <a class="registro" href="registro.php">Regístrate aquí</a>
+        </form> 
       </div>
   <?php
     }

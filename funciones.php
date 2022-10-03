@@ -285,6 +285,7 @@ function mostrarColumnasCursos() {
         }
         else {
           echo "<table cellspacing=0>";
+          echo "<thead>";
             while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
                 if($array['Field'] != "Activado") {
 
@@ -326,18 +327,20 @@ function mostrarCursos() {
                 else {
 
                     $src = 'img/cross.png';
+                    $class = "desactivado";
 
                 }
             }
             else {
 
                 echo "<td>$value</td>";
+                $class = "activado";
 
             }
             
         }
         echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
-        echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
+        echo"<td class=$class><a href='borrarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
         
         }
         echo "</tbody>";

@@ -9,36 +9,46 @@ session_start();
     <title>Cursos</title>
   </head>
     <body>
-
+    <header>
+          <h1 class="inicio">Administrar cursos</h1>
+        <img src="img/logo.png" alt="logo"></img>
+        <nav class="menu">
+          <ul>
+            
+            <li><a href="sortir.php">Cerrar sesión</a></li>
+              <li><a href="administracion.php">Volver al panel de control</a></li>
+          </ul>
+        </nav>
+      </header>
     <?php
         include("funciones.php");
         if(isset($_SESSION)) {
           if(validar($_SESSION['rol']) == 0) {
-            echo "Hola ".$_SESSION['nombre']."!";
+            ?><div id="tabla">
+            <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1><?php
             if(isset($_POST['Buscar'])) {
               ?>
-              <br/><a href="sortir.php">Sortir de la sessió</a><br/>
-              <a href="añadir_curso.php">Añadir un nuevo curso</a><br/>
-              <a href="administracion.php">Volver al panel de control</a><br/>
+              <br/><br/>
               <form id="buscar" method="POST">
               <input type="text" id="buscar" name="Buscar">
               <input type="submit" value="Buscar"></input>
             </form>
+            </div>
             <?php
               buscarCursos($_POST['Buscar']);
 
             }
             else {
             ?>
-              <br/><a href="sortir.php">Sortir de la sessió</a><br/>
-              <a href="añadir_curso.php">Añadir un nuevo curso</a><br/>
-              <a href="administracion.php">Volver al panel de control</a><br/>
+              <a class="añadir" href="añadir_curso.php">Añadir un nuevo curso</a><br/>
               <form id="buscar" method="POST">
                 <input type="text" id="buscar" name="Buscar">
-                <input type="submit" value="Buscar"></input>
+                <button type="submit" >Buscar</button>
               </form>
+            
             <?php
             mostrarCursos();
+          ?> </div> <?php
             }
           }
           else {

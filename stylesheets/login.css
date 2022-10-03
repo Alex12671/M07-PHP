@@ -112,6 +112,7 @@ input {
    border:none;
    border-bottom:2px solid black;
    margin-bottom:40px;
+   outline:none;
 }
 
 #email,#passwd {
@@ -120,10 +121,6 @@ input {
 
 input:hover {
    background-color:#4285f4;
-}
-
-input:focus {
-   border:1px solid blue;
 }
 
 

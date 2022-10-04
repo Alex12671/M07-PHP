@@ -4,41 +4,48 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="stylesheets/añadir_curso.css">
     <meta charset="utf-8">
     <title>Añadir Curso</title> 
   </head>
     <body>
-
+    
     <?php
     include("funciones.php");
-    if(isset($_SESSION)) {
+    if($_SESSION) {
         if(validar($_SESSION['rol']) == 0) {
+          ?>
+          <header>
+          <h1 class="inicio">Añadir nuevo curso</h1>
+          <a href="index.php" class="foto" ><img src="img/logo.png" alt="logo"></img></a>
+          <nav class="menu">
+            <ul> 
+              <li><a href="sortir.php">Cerrar sesión</a></li>
+              <li><a href="cursos.php">Volver a administración de cursos</a></li>
+            </ul>
+          </nav>
+        </header>
+          <div id="modificar">
+          <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1><?php
           if(isset($_POST['Nom'])) {
             añadirCurso($_POST['Nom'],$_POST['Descripcio'],$_POST['Hores_Duracio'],$_POST['Data_Inici'],$_POST['Data_Final'],$_POST['DNI']);
             }
             else {
               ?>
-              <h1>Añadir un nuevo curso</h1>
             <form  id="addCurso" method="POST" >
-                <label for="Nom">Nom: 
-                <input type="text" id="addCurso" name="Nom" required><br/>
-                <label for="Descripcio">Descripció: 
-                <input type="text" id="addCurso" name="Descripcio" required>
-                <label for="Hores_Duracio">Hores duració: 
-                <input type="text" id="addCurso" name="Hores_Duracio" required><br/>
-                <label for="Data_Inici">Data inici: 
-                <input type="date" id="addCurso" name="Data_Inici" required >
-                <label for="Data_Final">Data final: 
-                <input type="date" id="addCurso" name="Data_Final" required ><br/>
-                <label for="DNI">DNI: 
+                <input type="text" id="addCurso" name="Nom" placeholder ="Nombre" required><br/>
+                <input type="text" id="addCurso" name="Descripcio" placeholder ="Descripcio" required><br/>
+                <input type="text" id="addCurso" name="Hores_Duracio" placeholder ="Hores_Duracio" required><br/>
+                <input type="text" id="addCurso" name="Data_Inici" onfocus="(this.type='date')" onfocusout="(this.type='text')" placeholder ="Data_Inici" required >
+                <input type="text" id="addCurso" name="Data_Final" onfocus="(this.type='date')" onfocusout="(this.type='text')" placeholder ="Data_Final" required ><br/>
                 <select name="DNI" id="addCurso" required>
                     <?php
                     listarProfesores();
                     ?>
                 </select>
-                <input type="submit" value="Entrar"></input>
-            </form><?php 
+                <button type="submit">Modificar</button>
+            </form>
+            </div><?php 
         }
       }
       else {

@@ -4,7 +4,7 @@ body {
  }
  header {
     display:grid;
-    grid-template-columns:1fr 2fr 1fr;
+    grid-template-columns:80px 2fr max-content;
     grid-template-rows:1;
     background-color: #4285f4;
     padding:0.5%;
@@ -20,7 +20,7 @@ body {
     font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
     color:white;
     text-align:center;
-    margin:2% 0px 0px 0;
+    margin:2% 0px 0px 18%;
  }
  
  nav {
@@ -49,12 +49,20 @@ body {
     font-size:calc(9px + 1vw);
  }
  
- 
+ a:hover {
+   text-decoration: underline;
+   color:black;
+ }
+
+ .foto {
+   align-self:center;
+ }
+
  img{
     grid-column-start: 1;
     grid-row-start: 1;
-    align-self:center;
-    width:18%;
+    place-self:center;
+    width:95%;
     min-width:60px;
     border-radius:40%;
  }
@@ -65,10 +73,11 @@ body {
     grid-template-columns:1fr;
     grid-template-rows:max-content 140px 1fr;
     width: 100%;
-    max-width:70em;
+    max-width:60em;
     margin:0 auto;
     padding-top:0;
     border-radius:15px;
+    margin-bottom:5%;
  }
 
  .bienvenida {
@@ -81,7 +90,7 @@ body {
     background-color:#4285f4;
     margin:0 auto;
     width:100%;
-    max-width:70em;
+    max-width:60em;
     padding-bottom:4%;
     padding-top:4%;
     border-top-left-radius:15px;
@@ -115,7 +124,7 @@ form {
    grid-column:1;
    grid-row:2;
    align-self:end;
-   margin-left:13%;
+   margin-left:11%;
 }
 
 table {
@@ -141,4 +150,14 @@ th {
 
 .activado {
    background-color: lightgreen;
+}
+
+.buscar {
+    background-color: #4285f4;
+    color:white;
+}
+
+button:hover {
+    background-color:white;
+    color:#4285f4;
 }

@@ -322,7 +322,7 @@ function mostrarCursos() {
                 if($value == '1') {
 
                     $src = 'img/tick.png';
-
+                    $class = "activado";
                 }
                 else {
 
@@ -334,7 +334,7 @@ function mostrarCursos() {
             else {
 
                 echo "<td>$value</td>";
-                $class = "activado";
+                
 
             }
             
@@ -544,6 +544,8 @@ function buscarCursos($nombre) {
     }
     else if (mysqli_num_rows($result) != 0) {
         mostrarColumnasCursos();
+        echo "<th>Modificar</th>";
+        echo "<th>Act./Desact.</th>";
         echo "</thead>";
         while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
           echo "<tbody>";
@@ -560,11 +562,12 @@ function buscarCursos($nombre) {
                 if($value == 1) {
 
                     $src = "img/tick.png";
-
+                    $class = "activado";
                 }
                 else if($value == 0) {
 
                     $src = "img/cross.png";
+                    $class = "desactivado";
 
                 }
 
@@ -574,7 +577,7 @@ function buscarCursos($nombre) {
           }
 
           echo"<td><a href='modificarcurso.php?Codi=".$array['Codi']."'><img src='img/pencil.png' alt='Modificar' style='width:42px;height:42px;'></a></td>";
-          echo"<td><a href='borrarcurso.php?Codi=".$array['Codi']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
+          echo"<td class=$class ><a  href='borrarcurso.php?Codi=".$array['Codi']."&estado=".$array['Activado']."'><img src=$src alt='Borrar' style='width:42px;height:42px;'></a></td></tr>";
           
         }
         echo "</tbody>";

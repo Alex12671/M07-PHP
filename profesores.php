@@ -9,36 +9,45 @@ session_start();
     <title>Profesores</title>
   </head>
     <body>
-
     <?php
         include("funciones.php");
-        if(isset($_SESSION)) {
+        if($_SESSION) {
           if(validar($_SESSION['rol']) == 0) {
-            echo "Hola ".$_SESSION['nombre']."!";
+            ?>
+            <header>
+              <h1 class="inicio">Administrar profesores</h1>
+              <a href="index.php" class="foto" ><img src="img/logo.png" alt="logo"></img></a>
+              <nav class="menu">
+                <ul>
+                  <li><a href="sortir.php">Cerrar sesión</a></li>
+                  <li><a href="administracion.php">Volver al panel de control</a></li>
+                </ul>
+              </nav>
+            </header>
+            <div id="tabla">
+            <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1><?php
             if(isset($_POST['Buscar'])) {
               ?>
-              <br/><a href="sortir.php">Sortir de la sessió</a><br/>
-              <a href="añadir_curso.php">Añadir un nuevo profesor</a><br/>
-              <a href="administracion.php">Volver al panel de control</a><br/>
+              <a class="añadir" href="añadir_curso.php">Añadir un nuevo profesor</a><br/>   
               <form id="buscar" method="POST">
               <input type="text" id="buscar" name="Buscar">
-              <input type="submit" value="Buscar"></input>
+              <button type="submit" class="buscar" >Buscar</button>
             </form>
+            
             <?php
               buscarProfesores($_POST['Buscar']);
 
             }
             else {
             ?>
-              <br/><a href="sortir.php">Sortir de la sessió</a><br/>
-              <a href="añadir_profesor.php">Añadir un nuevo profesor</a><br/>
-              <a href="administracion.php">Volver al panel de control</a><br/>
+              <a class="añadir" href="añadir_profesor.php">Añadir un nuevo profesor</a><br/>
               <form id="buscar" method="POST">
                 <input type="text" id="buscar" name="Buscar">
-                <input type="submit" value="Buscar"></input>
+                <button type="submit" class="buscar" >Buscar</button>
               </form>
             <?php
             mostrarProfesores();
+              ?></div><?php
           }
         }
         else {

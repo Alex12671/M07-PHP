@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    background-color: gainsboro;
+ }
+ header {
+    display:grid;
+    grid-template-columns:120px 2fr max-content;
+    grid-template-rows:1;
+    background-color: #4285f4;
+    padding:0.5%;
+    margin-bottom:5%;
+ }
+ 
+ .inicio {
+    grid-column-start:2;
+    grid-row-start:1;
+    align-self:center;
+    justify-self: center;
+    font-size:calc(13px + 3vw);
+    font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
+    color:white;
+    text-align:center;
+    margin:0px 0px 0px 13%;
+ }
+ 
+ nav {
+ grid-column-start:3;
+ grid-row-start:0;
+ align-self: end;
+ justify-self:center;
+ }
+ 
+ ul { 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align:right;
+ }
+ 
+ li {
+    margin-bottom:6%;
+    
+ }
+ 
+ a {
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: none;
+    font-size:calc(9px + 1vw);
+ }
+ 
+ a:hover {
+   text-decoration: underline;
+   color:black;
+ }
+
+ .foto {
+   align-self:center;
+ }
+
+ .logo{
+    grid-column-start: 1;
+    grid-row-start: 1;
+    place-self:center;
+    width:100%;
+    border-radius:40%;
+ }
+ 
+ #tabla {
+    background-color: white;
+    display: grid;
+    grid-template-columns:1fr;
+    grid-template-rows:max-content 1fr;
+    width: 100%;
+    max-width:80em;
+    margin:0 auto;
+    padding-top:0;
+    border-radius:15px;
+    margin-bottom:5%;
+ }
+
+ .bienvenida {
+    grid-row-start:1;
+    place-self: start center;
+    text-align:center;
+    font-family:'Franklin Gothic Medium','Arial Narrow', Arial, sans-serif;
+    color:white;
+    font-size: 40px;
+    background-color:#4285f4;
+    margin:0 auto;
+    width:100%;
+    max-width:80em;
+    padding-bottom:3%;
+    padding-top:2%;
+    border-top-left-radius:15px;
+    border-top-right-radius: 15px;
+ }
+
+.añadir {
+   grid-column:1;
+    grid-row:2;
+    place-self:start center;
+    margin-top:3%;
+    width:30%;
+    text-align:center;
+    color: white;
+    background-color: #4285f4;
+    border:1px solid #4285f4;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-    serif;
+    text-decoration: none;
+    font-size:calc(12px + 0.35vw);
+    border-radius: 15px;
+    padding:2%;
+ }
+ 
+ .añadir:hover {
+    background-color: white;
+    color:#4285f4;
+    text-decoration: underline;
+}
+
+
+table {
+   grid-row:1;
+   padding:1%;
+   place-self: start center;
+   border:none;
+}
+
+td {
+    border:none;
+}

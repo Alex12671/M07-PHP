@@ -783,7 +783,7 @@ function listarCursosDisponibles($email) {
     echo "<th>Matricularse/Darse de baja</th>";
     echo "</thead>";
     $today = date("Y-m-d");
-    $query = "SELECT * FROM cursos WHERE Data_Inici > '$today' AND Activado = 1";
+    $query = "SELECT * FROM cursos WHERE Activado = 1";
     $result = mysqli_query($conn,$query);
     if (!$result) {
         echo "Fallo al ejecutar la consulta";
@@ -795,13 +795,7 @@ function listarCursosDisponibles($email) {
             echo "<tr>"; 
             foreach ($array as $field_name => $value) {
 
-                if($field_name == "Foto") {
-
-                    $src = 'img/cross.png';
-
-                }
-                
-                else if ($field_name != "Activado") {
+                if ($field_name != "Activado") {
 
                     echo "<td>$value</td>";
 
@@ -815,21 +809,21 @@ function listarCursosDisponibles($email) {
             $query = "SELECT * FROM matricula WHERE DNI = '$dni' AND Codi = '".$array['Codi']."' ";
             if(mysqli_num_rows(mysqli_query($conn,$query)) == 0) {
 
-                if($array['Data_Final'] > $today) {
-                    echo "<td> <a href=matricularse.php?codi=".$array['Codi']." > <img src='img/matricula.png' style='width:42px;height:42px;'> </img></a> </td>";
+                if($array['Data_Inici'] > $today) {
+                    echo "<td> <a href=matricularse.php?codi=".$array['Codi']." > <img src='img/matricula.png' style='width:42px;height:42px;'> </img></a>Matrículate ahora </td>";
                 } 
                 else {
-                    echo "<td>Curso finalizado</td>";
+                    echo "<td>El curso ya ha comenzado</td>";
                 }
                 
             }
             else if(mysqli_num_rows(mysqli_query($conn,$query)) == 1) {
 
                 if($array['Data_Final'] > $today) {
-                    echo "<td> <a href=desmatricularse.php?codi=".$array['Codi']." > <img src='img/cross.png' style='width:42px;height:42px;'> </img></a> </td>";
+                    echo "<td> <a href=desmatricularse.php?codi=".$array['Codi']." > <img src='img/cross.png' style='width:42px;height:42px;'> </img></a>Desmatricularse </td>";
                 }
                 else {
-                    echo "<td>Curso finalizado</td>";
+                    echo "<td>Curso finalizado.</td>";
                 }
 
             }
@@ -868,9 +862,7 @@ function matricularse($codi,$email) {
     
         }
         else {
-
-            echo "Has sido matriculado correctamente";
-            echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+            echo '<meta http-equiv="refresh" content="0;url=inicioalumnos.php" />';
 
         }
     }
@@ -904,9 +896,7 @@ function desmatricularse($codi,$email) {
     
         }
         else {
-
-            echo "Has sido dado de baja correctamente";
-            echo '<meta http-equiv="refresh" content="2;url=inicioalumnos.php" />';
+            echo '<meta http-equiv="refresh" content="0;url=inicioalumnos.php" />';
 
         }
     }
@@ -996,6 +986,51 @@ function listarCursosMatriculados($email) {
 
 }
 
+
+function listarCursosProfesor($email) {
+    $conn = conectar();
+    $query = "SELECT DNI FROM professors WHERE Email = '$email'"; 
+    $result = mysqli_query($conn,$query);
+    
+    if (!$result) {
+        
+        echo "Fallo al ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
+    
+    }
+    else {
+        $dni = mysqli_fetch_array($result,MYSQLI_NUM)[0];
+        $query = "SELECT Nom,Descripcio,Data_Inici,Data_Final FROM cursos WHERE DNI = '$dni'";
+        $result = mysqli_query($conn,$query);
+    
+        if (!$result) {
+            
+            echo "Fallo al ejecutar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
+        
+        }
+        else {
+        
+            
+            while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+                echo "<table cellspacing=0 class=curso>";
+                echo "<tbody>";
+                echo "<tr>"; 
+                foreach ($array as $field_name => $value) {
+    
+                    echo "<td>$field_name : $value</td>";
+                    echo "</tr>";
+                    
+                }
+                
+                
+                echo "</table>";
+                }
+                
+
+        }
+    }
+}
 
 //esta es para los profes xd
 function listarAlumnos($email) {

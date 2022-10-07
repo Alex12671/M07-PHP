@@ -17,7 +17,7 @@ session_start();
             ?>
             <header>
               <h1 class="inicio">Administrar cursos</h1>
-              <a href="index.php" class="foto" ><img src="img/logo.png" alt="logo"></img></a>
+              <a href="index.php" class="foto" ><img class="logo" src="img/logo.png" alt="logo"></img></a>
               <nav class="menu">
                 <ul>
                   <li><a href="sortir.php">Cerrar sesión</a></li>

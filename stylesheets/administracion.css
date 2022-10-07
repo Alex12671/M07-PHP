@@ -4,7 +4,7 @@ body {
  }
  header {
     display:grid;
-    grid-template-columns:1fr 2fr 1fr;
+    grid-template-columns:120px 1fr max-content;
     grid-template-rows:1;
     background-color: #4285f4;
     padding:0.5%;
@@ -20,7 +20,7 @@ body {
     font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
     color:white;
     text-align:center;
-    margin:2% 0px 0px 0;
+    margin:2% 0px 0px 0px;
  }
  
  nav {
@@ -41,8 +41,6 @@ body {
     margin-bottom:6%;
     
  }
- 
- 
  
  .admin {
     color: white;
@@ -67,8 +65,7 @@ body {
     grid-column-start: 1;
     grid-row-start: 1;
     place-self:center;
-    width:24%;
-    min-width:60px;
+    width:100%;
     border-radius:40%;
  }
  
@@ -153,3 +150,12 @@ body {
     text-decoration: underline;
     background-color:black;
  }
+
+ .fallo {
+   margin-left:43%;
+   background-color:lightcoral;
+   border:2px solid red;
+   display:inline;
+   padding:15px;
+   border-radius: 15px;
+}

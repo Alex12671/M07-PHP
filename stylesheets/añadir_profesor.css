@@ -66,7 +66,7 @@ body {
     border-radius:40%;
  }
  
- #modificar {
+ #añadir {
     background-color: white;
     display: grid;
     grid-template-columns:1fr;
@@ -136,4 +136,22 @@ body {
     color:#4285f4;
     text-decoration: underline;
  }
+
+ .añadir {
+    width:70%;
+    margin-left:11%;
+    background-color: lightgreen;
+    padding:10px;
+    border-radius: 15px;
+    border: 3px solid green;
+  }
+ 
+  .falloañadir {
+    width:70%;
+    margin-left:11%;
+    background-color: lightcoral;
+    padding:10px;
+    border-radius: 15px;
+    border: 3px solid red;
+  }
  

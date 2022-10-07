@@ -1,10 +1,12 @@
 body {
    margin: 0;
-   background-color: gainsboro;
+   background-image:url("../img/portada.png");
+   background-repeat: no-repeat;
+   
 }
 header {
    display:grid;
-   grid-template-columns:1fr 1fr 1fr;
+   grid-template-columns:120px 1fr max-content;
    grid-template-rows:1;
    background-color: #4285f4;
    padding:0.5%;
@@ -19,7 +21,7 @@ header {
    font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
    color:white;
    text-align:center;
-   margin:2% 0px 0px 0px;
+   margin:2% 0px 0px 10%;
 }
 
 nav {
@@ -59,7 +61,7 @@ img{
    grid-column-start: 1;
    grid-row-start: 1;
    align-self:center;
-   width:18%;
+   width:100%;
    min-width:60px;
    border-radius:40%;
 }
@@ -167,4 +169,13 @@ button:hover {
    color:white;
    text-decoration: underline;
    background-color:black;
+}
+
+.fallo {
+   margin-left:43%;
+   background-color:lightcoral;
+   border:2px solid red;
+   display:inline;
+   padding:15px;
+   border-radius: 15px;
 }

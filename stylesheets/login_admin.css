@@ -4,7 +4,7 @@ body {
  }
  header {
     display:grid;
-    grid-template-columns:1fr 2fr 1fr;
+    grid-template-columns:120px 1fr max-content;
     grid-template-rows:1;
     background-color: #4285f4;
     padding:0.5%;
@@ -20,7 +20,7 @@ body {
     font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
     color:white;
     text-align:center;
-    margin:2% 0px 0px 0;
+    margin:2% 0px 0px 10%;
  }
  
  nav {
@@ -63,7 +63,7 @@ body {
     grid-column-start: 1;
     grid-row-start: 1;
     align-self:center;
-    width:18%;
+    width:100%;
     min-width:60px;
     border-radius:40%;
  }
@@ -153,3 +153,12 @@ body {
     color:#4285f4;
     text-decoration: underline;
  }
+ 
+ .fallo {
+   margin-left:43%;
+   background-color:lightcoral;
+   border:2px solid red;
+   display:inline;
+   padding:15px;
+   border-radius: 15px;
+}

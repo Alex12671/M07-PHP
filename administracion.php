@@ -16,10 +16,10 @@ session_start();
           ?>  
           <header>
             <h1 class="inicio">Panel de administración</h1>
-            <img src="img/logo.png" alt="logo"></img>
+            <a href="index.php" class="foto" ><img src="img/logo.png" alt="logo"></img></a>
             <nav class="menu">
               <ul>
-                <li ><a class="admin" href="login_admin.php">Cerrar sesión</a></li>
+                <li ><a class="admin" href="sortir.php">Cerrar sesión</a></li>
               </ul>
             </nav>
           </header>

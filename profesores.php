@@ -16,7 +16,7 @@ session_start();
             ?>
             <header>
               <h1 class="inicio">Administrar profesores</h1>
-              <a href="index.php" class="foto" ><img src="img/logo.png" alt="logo"></img></a>
+              <a href="index.php" class="foto" ><img class="logo" src="img/logo.png" alt="logo"></img></a>
               <nav class="menu">
                 <ul>
                   <li><a href="sortir.php">Cerrar sesión</a></li>
@@ -28,7 +28,7 @@ session_start();
             <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1><?php
             if(isset($_POST['Buscar'])) {
               ?>
-              <a class="añadir" href="añadir_curso.php">Añadir un nuevo profesor</a><br/>   
+              <a class="añadir" href="añadir_profesor.php">Añadir un nuevo profesor</a><br/>   
               <form id="buscar" method="POST">
               <input type="text" id="buscar" name="Buscar">
               <button type="submit" class="buscar" >Buscar</button>

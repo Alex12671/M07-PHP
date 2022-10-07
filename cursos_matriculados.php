@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="alumnos.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/cursos_matriculados.css">
     <meta charset="utf-8">
     <title>Panel de control alumnos</title>
   </head>
@@ -14,11 +14,19 @@ session_start();
         include("funciones.php");
         if($_SESSION) {
           if(validar($_SESSION['rol']) == 2) {
-            echo "Bienvenido ".$_SESSION['nombre']."!";
             ?>
-              <br/><a href="sortir.php">Sortir de la sessió</a>
-              <br/><a href="inicioalumnos.php">Tornar al panell principal</a>
-            <?php
+            <header>
+              <h1 class="matriculaInicio">Cursos matriculados</h1>
+              <a href="index.php" class="foto" ><img class="logo" src="img/logo.png" alt="logo"></img></a>
+              <nav class="menu">
+                <ul>
+                  <li><a href="sortir.php">Cerrar sesión</a></li>
+                  <li><a href="inicioalumnos.php">Volver a página de inicio</a></li>
+                </ul>
+              </nav>
+            </header>
+            <div id="tablaMatricula">
+            <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1><?php
             listarCursosMatriculados($_SESSION['email']);
           }
           else {

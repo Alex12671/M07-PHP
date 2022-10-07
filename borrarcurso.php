@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="stylesheets/modificarcurso.css">
     <meta charset="utf-8">
     <title>Borrar curso</title>
   </head>

@@ -11,7 +11,7 @@ session_start();
     <body>
         <header>
           <h1 class="inicio">Página de inicio</h1>
-        <img src="img/logo.png" alt="logo"></img>
+        <a href="index.php"><img src="img/logo.png" alt="logo"></img></a>
         <nav class="menu">
           <ul>
             

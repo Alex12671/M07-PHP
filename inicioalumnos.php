@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/alumnos.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/cursos_matriculados.css">
     <meta charset="utf-8">
     <title>Panel de control alumnos</title>
   </head>
@@ -14,13 +14,20 @@ session_start();
         include("funciones.php");
         if($_SESSION) {
           if(validar($_SESSION['rol']) == 2) {
-            echo "Bienvenido ".$_SESSION['nombre']."!";
             ?>
-              <br/><a href="sortir.php">Sortir de la sessió</a>
-              <br/><a href="cursos_matriculados.php">Veure el llistat de cursos matriculats</a>
-            <?php
+            <header>
+              <h1 class="inicio">Listado de cursos</h1>
+              <a href="index.php" class="foto" ><img class="logo" src="img/logo.png" alt="logo"></img></a>
+              <nav class="menu">
+                <ul>
+                  <li><a href="sortir.php">Cerrar sesión</a></li>
+                  <li><a href="cursos_matriculados.php">Ver listado de cursos matriculados</a></li>
+                </ul>
+              </nav>
+            </header>
+            <div id="tabla">
+            <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1><?php
             listarCursosDisponibles($_SESSION['email']);
-            //listarCursosMatriculados($_SESSION['email']);
           }
           else {
             echo "Solo los profesores pueden ver esta página";

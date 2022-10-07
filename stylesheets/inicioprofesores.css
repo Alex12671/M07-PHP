@@ -70,7 +70,7 @@ body {
     background-color: white;
     display: grid;
     grid-template-columns:1fr;
-    grid-template-rows:max-content 140px 1fr;
+    grid-template-rows:max-content 1fr;
     width: 100%;
     max-width:80em;
     margin:0 auto;
@@ -81,7 +81,7 @@ body {
 
  .bienvenida {
     grid-row-start:1;
-   place-self: start center;
+    place-self: start center;
     text-align:center;
     font-family:'Franklin Gothic Medium','Arial Narrow', Arial, sans-serif;
     color:white;
@@ -149,22 +149,4 @@ th {
     color:white;
     background: rgb(2,0,36);
     background: linear-gradient(rgba(2,0,36,1) 0%, rgba(9,9,121,1) 1%, rgba(9,71,124,1) 7%, rgba(0,212,255,1) 100%); 
-}
-
-.desactivado {
-   background-color: lightcoral;
-}
-
-.activado {
-   background-color: lightgreen;
-}
-
-.buscar {
-    background-color: #4285f4;
-    color:white;
-}
-
-button:hover {
-    background-color:white;
-    color:#4285f4;
 }

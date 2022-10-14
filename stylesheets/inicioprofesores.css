@@ -96,29 +96,6 @@ body {
     border-top-right-radius: 15px;
  }
 
-.añadir {
-   grid-column:1;
-    grid-row:2;
-    place-self:start center;
-    margin-top:3%;
-    width:30%;
-    text-align:center;
-    color: white;
-    background-color: #4285f4;
-    border:1px solid #4285f4;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-    serif;
-    text-decoration: none;
-    font-size:calc(12px + 0.35vw);
-    border-radius: 15px;
-    padding:2%;
- }
- 
- .añadir:hover {
-    background-color: white;
-    color:#4285f4;
-    text-decoration: underline;
-}
-
 form {
    grid-column:1;
    grid-row:2;
@@ -126,27 +103,37 @@ form {
    margin-left:11%;
 }
 
-table {
-   grid-row:3;
-   padding:1%;
-   place-self: center center;
+#cursos {
+   display:flex;
+}
+
+#curso {
+
+   grid-row:2;
+   padding:2% 6% 2% 6%;
+   margin: 5% 5% 5% 7%;
+   place-self: baseline;
+   font-size: x-large;
+   background-color: lightskyblue;
+   border-radius:30px;
+}
+
+#alumno {
+   grid-row:2;
+   padding:2% 6% 2% 6%;
+   margin: 5% 5% 5% 12%;
+   place-self: baseline;
+   font-size: 20px;
+   background-color: lightskyblue;
+   border-radius:30px;
 }
 
 
-tr:nth-child(2n + 1) {
-   background:gainsboro;
+
+tr {
+    text-align: center;
 }
 
 td {
-    border:1px solid black;
-    text-align: center;
-    padding:2px;
-}
-
-th {
-    border:1px solid black;
-    padding:20px;
-    color:white;
-    background: rgb(2,0,36);
-    background: linear-gradient(rgba(2,0,36,1) 0%, rgba(9,9,121,1) 1%, rgba(9,71,124,1) 7%, rgba(0,212,255,1) 100%); 
+   padding-bottom:13%;
 }

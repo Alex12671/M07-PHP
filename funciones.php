@@ -1033,22 +1033,9 @@ function listarCursosProfesor($email) {
 }
 
 //esta es para los profes xd
-function listarAlumnos($email) {
+function listarAlumnos($email,$codi) {
 
     $conn = conectar();
-    echo "<table cellspacing=0>";
-    echo "<thead>";
-    echo "<th>DNI</th>";
-    echo "<th>Email</th>";
-    echo "<th>Nom</th>";
-    echo "<th>Cognoms</th>";
-    echo "<th>Foto</th>";
-    echo "<th>Codi Curs</th>";
-    echo "<th>Nom Curs</th>";
-    echo "<th>Data inici</th>";
-    echo "<th>Data final</th>";
-    echo "<th>Nota</th>";
-    echo "</thead>";
     $query = "SELECT DNI FROM professors WHERE Email = '$email'"; 
     $result = mysqli_query($conn,$query);
     
@@ -1062,7 +1049,7 @@ function listarAlumnos($email) {
 
         $dni = mysqli_fetch_array($result,MYSQLI_NUM)[0];
         $today = date("Y-m-d");
-        $query = " SELECT a.DNI,a.Email,a.Nom,a.Cognoms,a.Foto,c.Codi,c.Nom AS Nom_Curs,c.Data_Inici,c.Data_Final,m.Nota FROM alumnes a INNER JOIN matricula m ON a.DNI = m.DNI INNER JOIN cursos c ON m.Codi = c.Codi WHERE c.DNI = '$dni'";
+        $query = " SELECT a.DNI,a.Email,a.Nom,a.Cognoms,a.Foto,m.Nota,c.Data_Final FROM alumnes a INNER JOIN matricula m ON a.DNI = m.DNI INNER JOIN cursos c ON m.Codi = c.Codi WHERE c.DNI = '$dni' AND c.Codi = '$codi'";
         $result = mysqli_query($conn,$query);
         if (!$result) {
             echo "Fallo al ejecutar la consulta";
@@ -1070,46 +1057,50 @@ function listarAlumnos($email) {
         }
         else {
             while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-            echo "<tbody>";
-            echo "<tr>"; 
-            foreach ($array as $field_name => $value) {
-                
-                if($field_name == "Foto") {
+                echo "<table id=alumno cellspacing=0>";
+                foreach ($array as $field_name => $value) {
+                    
+                    echo "<tr>"; 
+                    if($field_name == "Foto") {
 
-                    echo "<td><img src='$value' style='width:42px;height:42px;'></img></td>";
+                        echo "<td><img src='$value' style='width:42px;height:42px;'></img></td>";
 
-                }
-                
-                else if($field_name == "Nota") {
-                    if($array['Data_Final'] < $today) {
-                        if(is_null($value)) {
-
-                            echo "<td> <a href=ponernota.php?codi=".$array['Codi']."&id=".$array['DNI']." > <img src='img/nota.png' style='width:30px;height:30px;'> </img></a> </td>";
-        
-                        }
-                        else {
-                            echo "<td>$value<a href=ponernota.php?codi=".$array['Codi']."&id=".$array['DNI']." > <img src='img/nota.png' style='width:30px;height:30px;'> </img></a></td>";
-    
-                        }
-        
                     }
                     
+                    else if($field_name == "Nota") {
+                        if($array['Data_Final'] < $today) {
+                            if(is_null($value)) {
+
+                                echo "<td> <a href=ponernota.php?codi=$codi&id=".$array['DNI']." > <img src='img/nota.png' style='width:30px;height:30px;'> </img></a> </td>";
+            
+                            }
+                            else {
+                                echo "<td>$value<a href=ponernota.php?codi=$codi&id=".$array['DNI']." > <img src='img/nota.png' style='width:30px;height:30px;'> </img></a></td>";
+        
+                            }
+            
+                        }
+                        else {
+                            echo "<td>Nota no disponible</td>";
+                        }
+                        
+                        
+
+                    }
+                    else if($field_name != "Data_Final") {
+
+                        echo "<td>$field_name : $value</td>";
+
+                    }
                     
-
                 }
-                else {
-
-                    echo "<td>$value</td>";
-
-                }
+                echo "</tr>";
+            
                 
-            }
-            
-            
             
             }
-            echo "</tbody>";
-            echo "</table>";  
+            echo "</table>"; 
+             
         }
     }
     
@@ -1134,6 +1125,55 @@ function ponerNota($codi,$dni,$nota) {
         echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
     }
 
+}
+
+function mostrarCursosProfesor($email) {
+    $conn = conectar();
+    echo "</thead>";
+    
+    $query = "SELECT DNI FROM professors WHERE Email = '$email'"; 
+    $result = mysqli_query($conn,$query);
+    
+    if (!$result) {
+        
+        echo "Fallo al ejecutar la consulta";
+        echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
+    
+    }
+    else {
+        $dni = mysqli_fetch_array($result,MYSQLI_NUM)[0];
+        $query = "SELECT Codi,Nom,Descripcio,Hores_Duracio,Data_Inici,Data_Final FROM cursos WHERE DNI = '$dni'";
+        $result = $conn->query($query);
+        if (!$result) {
+            echo "Fallo al ejecutar la consulta";
+            echo '<meta http-equiv="refresh" content="2;url=admin.php" />';
+        }
+        else {
+
+            
+            while($array = $result-> fetch_array(MYSQLI_ASSOC)) {
+            
+            echo "<table id=curso cellspacing=0>";
+            echo "<tbody>";    
+            
+            foreach ($array as $field_name => $value) {
+                echo "<tr>"; 
+                if ($field_name != "Codi") {
+
+                    echo "<td>$field_name : $value</td>";
+
+                }
+                echo "<tr/>";
+            }
+            echo "<tr>";
+            echo "<td><a href=inicioprofesores.php?Codi=".$array['Codi'].">Ver listado de alumnos</a></td>";
+            echo "<tr/>";
+            echo "</tbody>";
+            echo "</table>";  
+            }
+            
+        }
+    }
 }
 
 ?>

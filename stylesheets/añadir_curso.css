@@ -137,3 +137,20 @@ body {
     text-decoration: underline;
  }
  
+ .errorsql {
+   text-align:center;
+   place-self:center center;
+   padding:2%;
+   border-radius:15px;
+   font-size:25px;
+   background-color: lightcoral;
+}
+
+.exito {
+   text-align:center;
+   place-self:center center;
+   padding:2%;
+   border-radius:15px;
+   font-size:25px;
+   background-color: lightgreen;
+}

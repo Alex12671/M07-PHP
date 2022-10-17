@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-10-2022 a las 09:18:10
+-- Tiempo de generación: 17-10-2022 a las 23:29:41
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -61,7 +61,7 @@ CREATE TABLE `alumnes` (
 
 INSERT INTO `alumnes` (`DNI`, `Email`, `Nom`, `Cognoms`, `Edat`, `Foto`, `Password`) VALUES
 ('42965325B', 'mateo@mail.es', 'Mateo', 'Rodríguez', 25, 'alumnes/alumno.png', '202cb962ac59075b964b07152d234b70'),
-('78264915P', 'martin@mail.es', 'Martin', 'Pérez', 19, 'alumnes/maxresdefault.jpg', '6e6e2ddb6346ce143d19d79b3358c16a');
+('78264915P', 'martin@mail.es', 'Martin', 'Pérez', 19, 'alumnes/826-8267293_ned-flanders-png.png', '6e6e2ddb6346ce143d19d79b3358c16a');
 
 -- --------------------------------------------------------
 
@@ -72,7 +72,7 @@ INSERT INTO `alumnes` (`DNI`, `Email`, `Nom`, `Cognoms`, `Edat`, `Foto`, `Passwo
 CREATE TABLE `cursos` (
   `Codi` int(11) NOT NULL,
   `Nom` varchar(255) NOT NULL,
-  `Descripcio` varchar(255) NOT NULL,
+  `Descripcio` varchar(1024) NOT NULL,
   `Hores_Duracio` int(10) NOT NULL,
   `Data_Inici` date NOT NULL,
   `Data_Final` date NOT NULL,
@@ -85,11 +85,12 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`Codi`, `Nom`, `Descripcio`, `Hores_Duracio`, `Data_Inici`, `Data_Final`, `DNI`, `Activado`) VALUES
-(1, 'Mates', 'pues no se bro mates', 528, '2022-10-18', '2022-09-18', '54821696P', 1),
-(8, 'Historia', 'historia españa', 236, '2022-09-29', '2022-10-07', '23456789A', 1),
-(9, 'English', 'English bruh', 420, '2022-09-28', '2022-10-08', '54821569L', 1),
-(11, 'Programacion', 'Programar en C', 69, '2022-09-28', '2022-10-06', '54821569L', 0),
-(13, 'Aleman', 'Curso básico aleman', 212, '2022-10-09', '2022-10-26', '54821696P', 1);
+(1, 'Curso profesional de Python', 'En el nuevo curso profesional de Python nos enfocaremos en aprender todo los necesario para convertirnos en desarrolladores Python. Aplicando las mejores practicas de programación logrando así un código mucho más Pythonico.', 528, '2022-08-09', '2022-10-05', '54821696P', 1),
+(8, 'CSS', 'Aprende los fundamentos y bases sólidas de CSS desde 0. Este curso es para ti si quieres empezar en CSS.', 236, '2022-09-29', '2022-10-07', '54821696P', 1),
+(9, 'JavaScript', 'Aprende JavaScript a profundidad, desde las bases del lenguaje, hasta el trabajo con objetos, programación asíncrona, novedades del lenguaje, buenas prácticas, conceptos teóricos y mucho más. Un curso teórico práctico para dominar JavaScript, más de 30 mil personas lo han tomado.', 420, '2022-10-26', '2023-02-10', '54821696P', 1),
+(11, 'Machine Learning', 'Conoce los conceptos básicos del aprendizaje automático: qué tipos hay, qué es lo que se necesita para comenzar con él, los problemas que podemos encontrar, cómo evaluamos un modelo y qué algoritmos podemos usar.', 69, '2022-09-28', '2022-10-06', '54821569L', 0),
+(13, 'PHP', 'En este curso de PHP aprenderás de forma práctica los conceptos básicos, las mejores técnicas, así como las librerías más populares y herramientas necesarias para programar de forma eficiente con este lenguaje de programación. ', 212, '2022-10-11', '2022-10-26', '54821696P', 1),
+(15, 'Docker', 'Docker es una plataforma completa de manejo de contenedores. A lo largo de este curso aprenderás qué es Docker, por qué usarlo y te introducirás en el manejo de dichos contenedores con ejemplos prácticos que te guían a través del mundo del manejo de aplicaciones con contenedores.', 69, '2022-09-28', '2022-10-06', '54821569L', 0);
 
 -- --------------------------------------------------------
 
@@ -134,7 +135,7 @@ CREATE TABLE `professors` (
 
 INSERT INTO `professors` (`DNI`, `Email`, `Nom`, `Cognoms`, `Titol_Academic`, `Foto`, `Password`, `Activado`) VALUES
 ('12345678A', 'jesucristo@mail.es', 'Jesucristo', 'Superstar', 'Experto en morir jaja', 'professors/Pablo.jpg', '202cb962ac59075b964b07152d234b70', 1),
-('23456789A', 'jose@mail.es', 'Jose', 'Rodriguez', 'Física', 'professors/maxresdefault.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 0),
+('23456789A', 'jose@mail.es', 'Jose', 'Rodriguez', 'Física', 'professors/CG_Shadow_11.png', '6e6e2ddb6346ce143d19d79b3358c16a', 0),
 ('54821569L', 'juanito@mail.com', 'Juan', 'sssssss', 'Experto en Dokkan', 'professors/19-04-10Jaime-Nubiola.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 1),
 ('54821696P', 'matias@mail.es', 'Matias', 'Marin', 'Profesor de alemán', 'professors/bruh.jpg', '202cb962ac59075b964b07152d234b70', 1);
 
@@ -182,7 +183,7 @@ ALTER TABLE `professors`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `Codi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `Codi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `matricula`

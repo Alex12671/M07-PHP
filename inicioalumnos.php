@@ -22,6 +22,7 @@ session_start();
                 <ul>
                   <li><a href="sortir.php">Cerrar sesión</a></li>
                   <li><a href="cursos_matriculados.php">Ver listado de cursos matriculados</a></li>
+                  <li><a href="modificar_alumno.php"class="mod_prof"> Modificar perfil</a></li>
                 </ul>
               </nav>
             </header>

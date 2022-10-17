@@ -19,7 +19,7 @@ body {
     font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
     color:white;
     text-align:center;
-    margin:2% 0px 0px 19%;
+    margin:2% 0px 0px 20%;
  }
  
  nav {
@@ -62,8 +62,7 @@ body {
     grid-column-start: 1;
     grid-row-start: 1;
     place-self:center;
-    width:95%;
-    min-width:60px;
+    width:100%;
     border-radius:40%;
  }
  
@@ -101,13 +100,14 @@ body {
     grid-row-start:2;
     text-align: center;
  }
-
+ 
  input {
     text-align:center;
     border:none;
     border-bottom:2px solid black;
     margin-bottom:40px;
     outline:none;
+    width:40%;
  }
  
  input:hover {
@@ -138,62 +138,20 @@ body {
     text-decoration: underline;
  }
  
- /*parte para borrar profesor*/
-
- p {
-   display:flex;
-   text-align:center;
-   font-size:large;
-   color:black;
- }
- .exito {
-   padding:10px;
-   width:11%;
-  border: 3px solid green;
-   margin-left:45%;
-   margin-bottom:45%;
-   border-radius: 15px;
-   background-color: lightgreen;
- }
-
  .errorsql {
-   display:inline;
    text-align:center;
    place-self:center center;
-   margin-left:38%;
    padding:2%;
    border-radius:15px;
    font-size:25px;
    background-color: lightcoral;
 }
 
- /*parte para modificar profesor*/
-
- .modificar {
-   width:70%;
-   margin-left:11%;
-   background-color: lightgreen;
-   padding:10px;
-   border-radius: 15px;
-   border: 3px solid green;
- }
-
- .fallomodificar {
-   width:70%;
-   margin-left:11%;
-   background-color: lightcoral;
-   padding:10px;
-   border-radius: 15px;
-   border: 3px solid red;
- }
-
- .errorsql2 {
-   display:inline;
+.exito {
    text-align:center;
    place-self:center center;
-   margin-left:38%;
    padding:2%;
    border-radius:15px;
    font-size:25px;
-   background-color: lightcoral;
+   background-color: lightgreen;
 }

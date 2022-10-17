@@ -119,34 +119,57 @@ a:hover {
    text-decoration: underline;
 }
 
-form {
-  grid-column:1;
-  grid-row:2;
-  align-self:end;
-  margin-left:11%;
+
+.alumnos {
+    display:flex;
+    flex-wrap:wrap;
+    width:100%;
+    flex-direction: row;
+  }
+ 
+ table {
+   width:50%;
+   grid-row:2;
+   margin:1% 5% 1% 5%;
+   background-color: lightskyblue;
+   border-radius:20px;
+   font-weight:bold;
+   font-size:18px;
+   flex:0 40%;
+ }
+ 
+ tr {
+   text-align:center;
+ }
+ 
+ td {
+   padding-top:4%;
+ }
+
+ 
+.nombre {
+    font-size:30px;
+    width:80%;
+    border-bottom: 2px solid black;
+    
+  }
+
+.nota {
+    font-size:30px;  
 }
 
-table {
-  grid-row:3;
-  padding:1%;
-  place-self: center center;
-}
+.errorsql {
+    text-align:center;
+    place-self:center center;
+    padding:2%;
+    border-radius:15px;
+    font-size:25px;
+    background-color: lightcoral;
+ }
 
+ .noresult {
+    text-align:center;
+    place-self:center center;
+    font-size:25px;
+ }
 
-tr:nth-child(2n + 1) {
-  background:gainsboro;
-}
-
-td {
-   border:1px solid black;
-   text-align: center;
-   padding:2px;
-}
-
-th {
-   border:1px solid black;
-   padding:20px;
-   color:white;
-   background: rgb(2,0,36);
-   background: linear-gradient(rgba(2,0,36,1) 0%, rgba(9,9,121,1) 1%, rgba(9,71,124,1) 7%, rgba(0,212,255,1) 100%); 
-}

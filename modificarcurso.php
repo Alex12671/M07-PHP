@@ -53,4 +53,25 @@ session_start();
         }
     ?>
     </body>
+    <script>
+      //controlando la fecha mínima de entrada a hoy
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      dataInici = document.getElementById("Data_Inici");
+      dataInici.min = today.toLocaleDateString('en-ca');
+      //funcion para controlar las fechas de entrada
+      function getDatevalue() {
+        
+        dataFinal = document.getElementById("Data_Final");
+        dataMinima = new Date(dataInici.value);
+        dataMinima.setDate(dataMinima.getDate() + 1);
+        dataFinal.min = dataMinima.toLocaleDateString('en-ca');;
+        dataFinal.disabled = false;
+        dataFinal.value = '';
+      }
+      
+      
+      
+    </script>
 </html>

@@ -33,17 +33,17 @@ session_start();
             else {
               ?>
             <form  id="addCurso" method="POST" >
-                <input type="text" id="addCurso" name="Nom" placeholder ="Nombre" required><br/>
-                <input type="text" id="addCurso" name="Descripcio" placeholder ="Descripcio" required><br/>
-                <input type="text" id="addCurso" name="Hores_Duracio" placeholder ="Hores_Duracio" required><br/>
-                <input type="text" id="addCurso" name="Data_Inici" onfocus="(this.type='date')" onfocusout="(this.type='text')" placeholder ="Data_Inici" required >
-                <input type="text" id="addCurso" name="Data_Final" onfocus="(this.type='date')" onfocusout="(this.type='text')" placeholder ="Data_Final" required ><br/>
-                <select name="DNI" id="addCurso" required>
+                <input type="text" id="Nom" name="Nom" placeholder ="Nombre" required><br/>
+                <input type="text" id="Descripcio" name="Descripcio" placeholder ="Descripcio" required><br/>
+                <input type="text" id="Hores_Duracio" name="Hores_Duracio" placeholder ="Hores_Duracio" required><br/>
+                <input type="text" id="Data_Inici" name="Data_Inici" onchange="getDatevalue()" onfocus="(this.type='date')" placeholder ="Data_Inici" required >
+                <input type="text" id="Data_Final" name="Data_Final" onfocus="(this.type='date')" placeholder ="Data_Final" required disabled><br/>
+                <select name="DNI" id="DNI" required>
                     <?php
                     listarProfesores();
                     ?>
                 </select>
-                <button type="submit">Modificar</button>
+                <button type="submit">Añadir</button>
             </form>
             </div><?php 
         }
@@ -60,4 +60,25 @@ session_start();
     
     ?>
     </body>
+    <script>
+      //controlando la fecha mínima de entrada a hoy
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      dataInici = document.getElementById("Data_Inici");
+      dataInici.min = today.toLocaleDateString('en-ca');
+      //funcion para controlar las fechas de entrada
+      function getDatevalue() {
+        
+        dataFinal = document.getElementById("Data_Final");
+        dataMinima = new Date(dataInici.value);
+        dataMinima.setDate(dataMinima.getDate() + 1);
+        dataFinal.min = dataMinima.toLocaleDateString('en-ca');;
+        dataFinal.disabled = false;
+        dataFinal.value = '';
+      }
+      
+      
+      
+    </script>
 </html>

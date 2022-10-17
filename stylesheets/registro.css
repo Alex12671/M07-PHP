@@ -1,0 +1,187 @@
+body {
+    margin: 0;
+    background-color: gainsboro;
+ }
+ header {
+    display:grid;
+    grid-template-columns:120px 2fr max-content;
+    grid-template-rows:1;
+    background-color: #4285f4;
+    padding:0.5%;
+    margin-bottom:5%;
+ }
+ 
+ .inicio {
+    grid-column-start:2;
+    grid-row-start:1;
+    align-self:start;
+    font-size:calc(9px + 3.5vw);
+    font-family: Impact, Haettenschweiler,'Arial Narrow Bold', sans-serif;
+    color:white;
+    text-align:center;
+    margin:2% 0px 0px 19%;
+ }
+ 
+ nav {
+    grid-column-start:3;
+    grid-row-start:0;
+    align-self: end;
+ }
+ 
+ ul { 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align:right;
+ }
+ 
+ li {
+    margin-bottom:6%;
+ }
+ 
+ 
+ 
+ a {
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: none;
+    font-size:calc(9px + 1vw);
+ }
+ 
+ 
+ a:hover {
+    text-decoration: underline;
+    color:black;
+ }
+ 
+ .foto {
+    align-self:center;
+  }
+
+ img{
+    grid-column-start: 1;
+    grid-row-start: 1;
+    place-self:center;
+    width:95%;
+    min-width:60px;
+    border-radius:40%;
+ }
+ 
+ #registro {
+    background-color: white;
+    display: grid;
+    grid-template-columns:1fr;
+    grid-template-rows:max-content 1fr;
+    width: 100%;
+    max-width:23.75em;
+    margin:0 auto;
+    padding-top:0;
+    border-radius:15px;
+ }
+
+ 
+ form {
+    grid-row-start:2;
+    text-align: center;
+ }
+
+ input {
+    text-align:center;
+    border:none;
+    border-bottom:2px solid black;
+    margin-bottom:40px;
+    outline:none;
+ }
+ 
+ input:hover {
+    background-color:#4285f4;
+ }
+ 
+ 
+ ::placeholder {
+    color:black;
+    font-size:16px;
+ }
+ 
+ button {
+    width:60%;
+    background-color:#4285f4;
+    border:1px solid #4285f4;
+    border-radius: 15px;
+    padding: 3%;
+    margin: 5% 0px 5% 0px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-    serif;
+    font-size:calc(12px + 0.45vw);
+    color:white;
+ }
+ 
+ button:hover {
+    background-color: white;
+    color:#4285f4;
+    text-decoration: underline;
+ }
+ 
+ /*parte para borrar curso*/
+
+ p {
+   display:flex;
+   text-align:center;
+   font-size:large;
+   color:black;
+ }
+ .exito {
+   padding:10px;
+   width:11%;
+  border: 3px solid green;
+   margin-left:45%;
+   margin-bottom:45%;
+   border-radius: 15px;
+   background-color: lightgreen;
+ }
+
+ .fallo {
+   padding:2%;
+   margin:0 auto;
+   background-color: lightcoral;
+ }
+
+ .registro {
+   width:70%;
+   margin-left:11%;
+   background-color: lightgreen;
+   padding:10px;
+   border-radius: 15px;
+   border: 3px solid green;
+   text-align: center;
+ }
+
+ .fallomodificar {
+   width:70%;
+   margin-left:11%;
+   background-color: lightcoral;
+   padding:10px;
+   border-radius: 15px;
+   border: 3px solid red;
+   text-align: center;
+ }
+
+ .errorsql1 {
+   display:inline;
+   width:70%;
+   margin-left:44%;
+   margin-top:15%;
+   background-color: lightcoral;
+   padding:10px;
+   border-radius: 15px;
+   border: 3px solid red;
+   text-align: center;
+ }
+
+ .errorsql {
+   text-align:center;
+   place-self:center center;
+   padding:2%;
+   border-radius:15px;
+   font-size:25px;
+   background-color: lightcoral;
+}

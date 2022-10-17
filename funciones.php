@@ -161,6 +161,7 @@ function registrar($dni,$email,$nom,$cognoms,$edat,$password) {
     
 }
 
+//funcion que recibe parámetros de formulario y crea nueva entrada en la base de datos
 function añadirCurso($nom,$descripcio,$hores_duracio,$data_inici,$data_final,$dni) {
     
     try {
@@ -178,6 +179,7 @@ function añadirCurso($nom,$descripcio,$hores_duracio,$data_inici,$data_final,$d
     
 }
 
+//funcion que recibe código y estado del curso y modifica su activación
 function borrarCurso($codi,$estado) {
     try {
         $conn = conectar();
@@ -207,6 +209,7 @@ function borrarCurso($codi,$estado) {
     
 }
 
+//funcion que recibe el código del curso y modifica sus datos
 function modificarCurso($codi) {
     try {
         $conn = conectar();
@@ -265,7 +268,7 @@ function modificarCurso($codi) {
 }
   
 
-
+//función que dibuja las columnas de los cursos
 function mostrarColumnasCursos() {
     try {
         $conn = conectar();
@@ -289,6 +292,7 @@ function mostrarColumnasCursos() {
     
 }
 
+//función que recoge información de la base de datos para mostrar cursos
 function mostrarCursos() {
     try {
         $conn = conectar();
@@ -340,6 +344,7 @@ function mostrarCursos() {
     
 }
   
+//función que recoge datos de la base de datos para listar profesores
 function listarProfesores() {
     try {
         $conn = conectar();
@@ -358,6 +363,7 @@ function listarProfesores() {
     }
     
 }
+
 
 function mostrarColumnasProfesores() {
     try {
@@ -383,6 +389,7 @@ function mostrarColumnasProfesores() {
     
 }
 
+//función sin parámetros, recoge información de la tabla profesores y los muestra
 function mostrarProfesores() {
     try {
         $conn = conectar();
@@ -441,6 +448,7 @@ function mostrarProfesores() {
 }
 
 
+//función que recoge datos de formulario y crea nueva entrada en base de datos
 function añadirProfesor($dni,$email,$nom,$cognoms,$titol,$password) {
     try {
         $conn = conectar();
@@ -482,6 +490,7 @@ function añadirProfesor($dni,$email,$nom,$cognoms,$titol,$password) {
 }
 
 
+//función que recibe dni y estado de profesor, modifica el estado 
 function borrarProfesor($dni,$estado) {
     try {
         $conn = conectar();
@@ -509,7 +518,7 @@ function borrarProfesor($dni,$estado) {
 
 }
 
-
+//función que recibe el nombre de un buscador y genera búsqueda en la base de datos
 function buscarCursos($nombre) {
     try {
         $conn = conectar();
@@ -571,6 +580,7 @@ function buscarCursos($nombre) {
     
 }
 
+//función que recibe el nombre de un buscador y genera búsqueda en la base de datos
 function buscarProfesores($nombre) {
     try {
         $conn = conectar();
@@ -641,6 +651,7 @@ function buscarProfesores($nombre) {
     
 }
 
+//función que llama a la modificación de un profesor con su dni
 function modificarProfesor($dni) {
     try {
         $conn = conectar();
@@ -741,7 +752,7 @@ function modificarProfesor($dni) {
     
 }
 
-
+//función que recibe el email de la sesión activa, lista los cursos del alumno
 function listarCursosDisponibles($email) {
     try {
         $conn = conectar();
@@ -801,6 +812,7 @@ function listarCursosDisponibles($email) {
     
 }
 
+//función que recibe código de curso y email de sesión activa, genera nueva relación en base de datos
 function matricularse($codi,$email) {
     try {
         $conn = conectar();
@@ -823,6 +835,7 @@ function matricularse($codi,$email) {
 
 }
 
+//función que recibe código de curso y email de sesión activa, borra relación en base de datos
 function desmatricularse($codi,$email) {
     try {
         $conn = conectar();
@@ -842,6 +855,7 @@ function desmatricularse($codi,$email) {
     
 }
 
+//función sin parámetros, genera formulario para modificar alumno y modifica entrada existente en la base de datos
 function modificarAlumno() {
     try {
         $conn = conectar();
@@ -945,7 +959,7 @@ function modificarAlumno() {
 
 
 
-
+//recibe email de sesión activa, accede a base de datos y lista cursos en los que hay matrícula
 function listarCursosMatriculados($email) {
     try {
         $conn = conectar();
@@ -1007,7 +1021,7 @@ function listarCursosMatriculados($email) {
 
 }
 
-
+//función que recibe email de profesor activo y lista sus cursos accediendo a base de datos
 function listarCursosProfesor($email) {
 
     try {
@@ -1048,7 +1062,7 @@ function listarCursosProfesor($email) {
         
 }
 
-//esta es para los profes xd
+//funcion que recibe email de profesor activo y código de curso y lista los alumnos de ese curso
 function listarAlumnos($email,$codi) {
 
     
@@ -1109,7 +1123,7 @@ function listarAlumnos($email,$codi) {
 
 }
 
-
+//función que recibe código de curso, dni de alumno y nota, modifica o crea nota en base de datos
 function ponerNota($codi,$dni,$nota) {
 
     

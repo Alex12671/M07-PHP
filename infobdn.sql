@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-10-2022 a las 23:29:41
+-- Tiempo de generación: 18-10-2022 a las 07:52:43
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -60,6 +60,9 @@ CREATE TABLE `alumnes` (
 --
 
 INSERT INTO `alumnes` (`DNI`, `Email`, `Nom`, `Cognoms`, `Edat`, `Foto`, `Password`) VALUES
+('11111111A', 'alumno1@gmail.es', 'Alumno', '1', 20, 'alumnes/408088.png', '202cb962ac59075b964b07152d234b70'),
+('22222222A', 'alumno2@gmail.es', 'Alumno', '2', 25, 'alumnes/th.png', '202cb962ac59075b964b07152d234b70'),
+('33333333A', 'alumno3@mail.es', 'Alumno', '3', 18, 'alumnes/ola.png', '202cb962ac59075b964b07152d234b70'),
 ('42965325B', 'mateo@mail.es', 'Mateo', 'Rodríguez', 25, 'alumnes/alumno.png', '202cb962ac59075b964b07152d234b70'),
 ('78264915P', 'martin@mail.es', 'Martin', 'Pérez', 19, 'alumnes/826-8267293_ned-flanders-png.png', '6e6e2ddb6346ce143d19d79b3358c16a');
 
@@ -109,8 +112,14 @@ CREATE TABLE `matricula` (
 --
 
 INSERT INTO `matricula` (`DNI`, `Codi`, `Nota`) VALUES
+('11111111A', 1, NULL),
+('22222222A', 1, NULL),
+('33333333A', 1, NULL),
 ('42965325B', 1, 5),
-('78264915P', 1, NULL);
+('78264915P', 1, NULL),
+('11111111A', 9, NULL),
+('22222222A', 9, NULL),
+('33333333A', 9, NULL);
 
 -- --------------------------------------------------------
 
@@ -134,10 +143,10 @@ CREATE TABLE `professors` (
 --
 
 INSERT INTO `professors` (`DNI`, `Email`, `Nom`, `Cognoms`, `Titol_Academic`, `Foto`, `Password`, `Activado`) VALUES
-('12345678A', 'jesucristo@mail.es', 'Jesucristo', 'Superstar', 'Experto en morir jaja', 'professors/Pablo.jpg', '202cb962ac59075b964b07152d234b70', 1),
-('23456789A', 'jose@mail.es', 'Jose', 'Rodriguez', 'Física', 'professors/CG_Shadow_11.png', '6e6e2ddb6346ce143d19d79b3358c16a', 0),
-('54821569L', 'juanito@mail.com', 'Juan', 'sssssss', 'Experto en Dokkan', 'professors/19-04-10Jaime-Nubiola.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 1),
-('54821696P', 'matias@mail.es', 'Matias', 'Marin', 'Profesor de alemán', 'professors/bruh.jpg', '202cb962ac59075b964b07152d234b70', 1);
+('12345678A', 'profesor1@mail.es', 'Profesor', '1', 'JavaScript avanzado', 'professors/Pablo.jpg', '202cb962ac59075b964b07152d234b70', 1),
+('23456789A', 'profesor2@mail.es', 'Profesor', '2', 'Física', 'professors/CG_Shadow_11.png', '6e6e2ddb6346ce143d19d79b3358c16a', 0),
+('54821569L', 'profesor3@mail.com', 'Profesor', '3', 'Ingeniero informático', 'professors/19-04-10Jaime-Nubiola.jpg', '6e6e2ddb6346ce143d19d79b3358c16a', 1),
+('54821696P', 'matias@mail.es', 'Matias', 'Marin', 'Ingeniería en software', 'professors/bruh.jpg', '202cb962ac59075b964b07152d234b70', 1);
 
 --
 -- Índices para tablas volcadas

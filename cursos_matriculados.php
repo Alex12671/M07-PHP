@@ -16,7 +16,7 @@ session_start();
           if(validar($_SESSION['rol']) == 2) {
             ?>
             <header>
-              <h1 class="matriculaInicio">Cursos matriculados</h1>
+              <h1 class="inicio">Cursos matriculados</h1>
               <a href="index.php" class="foto" ><img class="logo" src="img/logo.png" alt="logo"></img></a>
               <nav class="menu">
                 <ul>
@@ -25,7 +25,7 @@ session_start();
                 </ul>
               </nav>
             </header>
-            <div id="tablaMatricula">
+            <div id="tabla">
             <h1 class="bienvenida" >Bienvenido <?php echo $_SESSION['nombre'];?>!</h1><?php
             listarCursosMatriculados($_SESSION['email']);
           }

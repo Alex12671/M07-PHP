@@ -322,6 +322,15 @@ function mostrarCursos() {
 
                 }
             }
+            else if($field_name == "Data_Inici") {
+                $fechaInicio = date("d/m/Y", strtotime($array["Data_Inici"]));
+                echo "<td>$fechaInicio</td>";
+               
+            }
+            else if($field_name == "Data_Final") {
+                $fechaFinal = date("d/m/Y", strtotime($array["Data_Final"]));
+                echo "<td>$fechaFinal</td>";
+            }
             else {
 
                 echo "<td>$value</td>";
@@ -756,55 +765,58 @@ function modificarProfesor($dni) {
 function listarCursosDisponibles($email) {
     try {
         $conn = conectar();
-        $query = "SELECT * FROM cursos WHERE Activado = 1";
+        $query = "SELECT Codi,Nom,Descripcio,Hores_Duracio,Data_Inici,Data_Final FROM cursos WHERE Activado = 1";
         $result = mysqli_query($conn,$query);
-        mostrarColumnasCursos();
-        echo "<th>Matricularse/Darse de baja</th>";
-        echo "</thead>";
         $today = date("Y-m-d");
-        
-            while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-                echo "<tbody>";
-                echo "<tr>"; 
-                foreach ($array as $field_name => $value) {
+        echo "<div class=cursos>";
+        while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+            echo "<table cellspacing=0>";
+            echo "<tbody>";
+            $fechaInicio = date("d/m/Y", strtotime($array["Data_Inici"]));
+            $fechaFinal = date("d/m/Y", strtotime($array["Data_Final"]));
+            echo "<tr>"; 
+            echo "<td class=nombre>".$array['Nom']."</td>";
+            echo "</tr>";
+            echo "<tr>"; 
+            echo "<td>".$array['Descripcio']."</td>";
+            echo "</tr>";
+            echo "<tr>"; 
+            echo "<td>Hores totals: ".$array['Hores_Duracio']."</td>";
+            echo "</tr>";
+            echo "<tr>"; 
+            echo "<td>Data Inici - Final: $fechaInicio - $fechaFinal</td>";
+            echo "</tr>";  
 
-                    if ($field_name != "Activado") {
+            $query = "SELECT DNI FROM alumnes WHERE Email = '$email'"; 
+            $row = mysqli_fetch_row(mysqli_query($conn,$query));
+            $dni = $row[0];
+            $query = "SELECT * FROM matricula WHERE DNI = '$dni' AND Codi = '".$array['Codi']."' ";
+            if(mysqli_num_rows(mysqli_query($conn,$query)) == 0) {
 
-                        echo "<td>$value</td>";
-
-                    }
-                    
+                if($array['Data_Inici'] > $today) {
+                    echo "<td class=info> <a href=matricularse.php?codi=".$array['Codi']." > <img src='img/matricula.png' style='width:42px;height:42px;'> </img></a>Matrículate ahora </td>";
+                } 
+                else {
+                    echo "<td class=info>El curso ya ha comenzado</td>";
                 }
-
-                $query = "SELECT DNI FROM alumnes WHERE Email = '$email'"; 
-                $row = mysqli_fetch_row(mysqli_query($conn,$query));
-                $dni = $row[0];
-                $query = "SELECT * FROM matricula WHERE DNI = '$dni' AND Codi = '".$array['Codi']."' ";
-                if(mysqli_num_rows(mysqli_query($conn,$query)) == 0) {
-
-                    if($array['Data_Inici'] > $today) {
-                        echo "<td> <a href=matricularse.php?codi=".$array['Codi']." > <img src='img/matricula.png' style='width:42px;height:42px;'> </img></a>Matrículate ahora </td>";
-                    } 
-                    else {
-                        echo "<td>El curso ya ha comenzado</td>";
-                    }
-                    
-                }
-                else if(mysqli_num_rows(mysqli_query($conn,$query)) == 1) {
-
-                    if($array['Data_Final'] > $today) {
-                        echo "<td> <a href=desmatricularse.php?codi=".$array['Codi']." > <img src='img/cross.png' style='width:42px;height:42px;'> </img></a>Desmatricularse </td>";
-                    }
-                    else {
-                        echo "<td>Curso finalizado.</td>";
-                    }
-
-                }
-            }
                 
-            echo "</tbody>";
-            echo "</table>";  
-        
+            }
+            else if(mysqli_num_rows(mysqli_query($conn,$query)) == 1) {
+
+                if($array['Data_Final'] > $today) {
+                    echo "<td> <a href=desmatricularse.php?codi=".$array['Codi']." > <img src='img/cross.png' style='width:42px;height:42px;'> </img></a>Desmatricularse </td>";
+                }
+                else {
+                    echo "<td class=info>Curso finalizado.</td>";
+                }
+
+            }
+        }
+        echo "</div>";
+            
+        echo "</tbody>";
+        echo "</table>";  
+    
     } catch(Exception $ex) {
         echo "<p class=errorsql>Fallo al ejecutar la consulta</p>";
         echo '<meta http-equiv="refresh" content="2;url=index.php" />';
@@ -976,39 +988,39 @@ function listarCursosMatriculados($email) {
 
         }
         else {
-
-            mostrarColumnasCursos();
-            echo "<th>Nota</th>";
+            echo "<div class=cursos>";
             while($array = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-
+                echo "<table cellspacing=0>";
                 echo "<tbody>";
+                $fechaInicio = date("d/m/Y", strtotime($array["Data_Inici"]));
+                $fechaFinal = date("d/m/Y", strtotime($array["Data_Final"]));
                 echo "<tr>"; 
-                foreach ($array as $field_name => $value) {
-                    if($field_name == "Nota") {
+                echo "<td class=nombre>".$array['Nom']."</td>";
+                echo "</tr>";
+                echo "<tr>"; 
+                echo "<td>".$array['Descripcio']."</td>";
+                echo "</tr>";
+                echo "<tr>"; 
+                echo "<td>Hores totals: ".$array['Hores_Duracio']."</td>";
+                echo "</tr>";
+                echo "<tr>"; 
+                echo "<td>Data Inici - Final: $fechaInicio - $fechaFinal</td>";
+                echo "</tr>"; 
 
-                        if($array['Data_Final'] < date("Y-m-d")) {
-                    
-                            echo "<td>$value</td>";
-            
-                        }
-                        else {
-        
-                            echo "<td> No disponible </td>";
-        
-                        }
-
-                    }
-                    else {
-
-                        echo "<td>$value</td>";
-
-                    }
-                        
-                    
+                if($array['Data_Final'] < date("Y-m-d")) {
+                    echo "<tr>"; 
+                    echo "<td>".$array['Nota']."</td>";
+                    echo "</tr>"; 
+                }
+                else {
+                    echo "<tr>"; 
+                    echo "<td> No disponible </td>";
+                    echo "</tr>"; 
                 }
                 
             
             }
+            echo "</div>";
 
         }
 
@@ -1028,6 +1040,7 @@ function listarCursosProfesor($email) {
         $conn = conectar();
         $query = "SELECT DNI FROM professors WHERE Email = '$email'"; 
         $dni = mysqli_fetch_array(mysqli_query($conn,$query),MYSQLI_NUM)[0];
+        $today = date("Y-m-d");
         $query = "SELECT Codi,Nom,Descripcio,Data_Inici,Data_Final FROM cursos WHERE DNI = '$dni'";
         $result = mysqli_query($conn,$query);
         echo "<div class=cursos>";
@@ -1044,7 +1057,14 @@ function listarCursosProfesor($email) {
             echo "</tr>";
             echo "<tr>"; 
             echo "<td>Data Inici - Final: $fechaInicio - $fechaFinal</td>";
-            echo "</tr>";   
+            echo "</tr>";  
+            if($array['Data_Final'] < $today) {
+                    echo "<tr>";
+                    echo "<td><b>Curso finalizado. Ya puedes poner notas.</b></td>";
+                    echo "</tr>"; 
+                
+
+            }
             echo "<tr>";
             echo "<td><a class=enlace href=listadoalumnos.php?codi=".$array['Codi']."&nombre=".urlencode($array['Nom']).">Ver listado de alumnos</a></td>";
             echo "<tr>";
@@ -1084,6 +1104,9 @@ function listarAlumnos($email,$codi) {
                 echo "<tr>"; 
                 echo "<td class='nombre'>".$array['Nom']." ".$array['Cognoms']."</td>";
                 echo "<tr>"; 
+                echo "<tr>"; 
+                echo "<td>".$array['DNI']."</td>";
+                echo "</tr>"; 
                 echo "<td><img src=".$array['Foto']." style='width:100px;height:100px;'></img></td>";
                 echo "</tr>"; 
                 if($array['Data_Final'] < $today) {
@@ -1101,6 +1124,11 @@ function listarAlumnos($email,$codi) {
                         echo "</tr>"; 
                     }
     
+                }
+                else {
+                    echo "<tr>"; 
+                    echo "<td>Nota no disponible</td>";
+                    echo "</tr>"; 
                 }
                 echo "</tbody>";
                 echo "</table>";
@@ -1131,7 +1159,7 @@ function ponerNota($codi,$dni,$nota) {
         $conn = conectar();
         $query = "UPDATE matricula SET Nota = '$nota' WHERE DNI = '$dni' AND Codi = '$codi'";
         mysqli_query($conn,$query);
-        echo "Nota puesta correctamente";
+        echo "<p class=exito>Nota puesta correctamente</p>";
         echo '<meta http-equiv="refresh" content="2;url=inicioprofesores.php" />';
     } catch(Exception $ex) {
         echo "<p class=errorsql>Fallo al ejecutar la consulta</p>"; 
